@@ -92,8 +92,8 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
         for (int i = 0; i < searchDataList.size(); i++) {
 
             searchItemm = searchDataList.get(i).toString();
- 
-            Log.d("Caption", "" + searchItemm);
+
+            Log.d("Caption", "item" + searchItemm);
 
         }
 
