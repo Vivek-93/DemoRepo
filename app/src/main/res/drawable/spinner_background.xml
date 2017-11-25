@@ -1,0 +1,24 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/colorWhite" />
+
+            <stroke
+                android:width="1.5dp"
+                android:color="@color/colorPrimary" />
+
+            <corners android:radius="45dp" />
+            <padding
+                android:bottom="1dp"
+                android:left="8dp"
+                android:right="15dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:gravity="end"
+            android:src="@drawable/dropdown"
+            android:tint="@color/colorBlack" />
+    </item>
+</layer-list>

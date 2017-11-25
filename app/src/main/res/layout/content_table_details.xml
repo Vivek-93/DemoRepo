@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.bitplay.restpos.views.activities.TableDetailsActivity"
+    tools:showIn="@layout/activity_table_details">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/guest_name"
+            style="@style/wrap_textview"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Guest name :"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/guest_name_tv"
+            style="@style/wrap_textview"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/guest_name"
+            android:text="Goutam"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/guest_mobile_number"
+            style="@style/wrap_textview"
+            android:layout_below="@id/guest_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Mobile no.    :"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/guest_mobile_number_tv"
+            style="@style/wrap_textview"
+            android:layout_below="@id/guest_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/guest_mobile_number"
+            android:text="7007286202"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/guest_table_number"
+            style="@style/wrap_textview"
+            android:layout_below="@id/guest_mobile_number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Table no.      :"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/guest_table_number_tv"
+            style="@style/wrap_textview"
+            android:layout_below="@id/guest_mobile_number_tv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/guest_table_number"
+            android:text="10"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/guest_kot_number"
+            style="@style/wrap_textview"
+            android:layout_below="@id/guest_table_number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="KOT               :"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/guest_kot_number_tv"
+            style="@style/wrap_textview"
+            android:layout_below="@id/guest_table_number_tv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/guest_kot_number"
+            android:text="ABC10"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/act_table_details_catogery_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/login_bautton_background"
+            android:text="category"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/act_table_details_search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/act_table_details_catogery_btn"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_bautton_background"
+            android:text="   Search   "
+            android:textColor="@color/colorWhite" />
+
+    </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+    <FrameLayout
+        android:id="@+id/act_table_details_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+
+    <!-- <EditText
+         android:id="@+id/search_et"
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:singleLine="true"
+         android:background="@drawable/edittext_background"
+         android:layout_marginTop="5dp"
+         android:paddingLeft="20dp"
+         android:paddingRight="10dp"
+         android:layout_marginLeft="15dp"
+         android:layout_marginRight="15dp"
+         android:textColor="@color/colorAccent"
+         android:textSize="14sp"
+         android:hint="Search"/>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:padding="5dp"
+         android:weightSum="1">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight=".15"/>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight=".5"
+             android:text="Name"
+             android:textColor="@color/colorBlack"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight=".18"
+             android:text="Price"
+             android:gravity="end"
+             android:textColor="@color/colorBlack"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight=".2"
+             android:text="Available"
+             android:gravity="center"
+             android:textColor="@color/colorBlack"/>
+
+     </LinearLayout>
+
+     <android.support.v7.widget.RecyclerView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@+id/listView"
+         android:layout_marginTop="5dp" />
+
+     <TextView
+         android:id="@+id/act_table_details_empty_tv"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+         android:text="No Match is found"/>-->
+
+
+</LinearLayout>

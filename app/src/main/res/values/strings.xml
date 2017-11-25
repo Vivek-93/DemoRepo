@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">RestPOS</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_table_details">TableDetailsActivity</string>
+    <string name="success_message">Save successfully</string>
+    <string name="error_email_exists">Email already exist</string>
+    <string name="table_description">Tables of various shapes, heights, and sizes are designed for specific uses: Dining room tables are designed to be used for formal dining. Bedside tables, nightstands, or night tables are small tables used in a bedroom</string>
+
+
+    <string-array name="cotegory">
+        <item>All items</item>
+        <item>Veg</item>
+        <item>Non Veg</item>
+        <item>Appetizer</item>
+        <item>Beverages</item>
+        <item>Breakfast</item>
+        <item>Burger</item>
+        <item>Chinese Main Course</item>
+        <item>Chinese Starter</item>
+        <item>Chinese Soups</item>
+        <item>Main Course Lamb</item>
+        <item>Kitchen Beverages</item>
+        <item>Frecnch Roll Sandwich</item>
+        <item>Main Course Chicken</item>
+        <item>Main Course Fish</item>
+        <item>Main Course Prawn</item>
+        <item>Desserts</item>
+        <item>Main Course Extra</item>
+        <item>Extra Starter</item>
+        <item>Rice Noodles</item>
+        <item>Salad</item>
+        <item>Sizzlers</item>
+        <item>Soup</item>
+        <item>Main Course Salad</item>
+        <item>Sandwich</item>
+        <item>Momos</item>
+        <item>PIZZA</item>
+    </string-array>
+    <string name="title_activity_booked_items">BookedItemsActivity</string>
+    <string name="title_activity_kdmain">KDMainActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_cashier_main">CashierMainActivity</string>
+    <string name="title_activity_bill_pdf_view">BillPdfViewActivity</string>
+</resources>
