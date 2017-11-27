@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class CaptionSearchFragment extends Fragment implements View.OnClickListener {
 
-    ArrayList<MealDetails> searchList = new ArrayList<>();
+    private ArrayList<MealDetails> searchList = new ArrayList<>();
 
     public AutoCompleteTextView mSearchEt;
     public ImageView mSearchIv;
@@ -104,10 +104,7 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
         mCaptionSearchAdapter = new CaptionSearchAdapter(getContext(), mSearchedItemsList);
         mCaptionSearchRv.setAdapter(mCaptionSearchAdapter);
         mSearchEt.setText("");
-      /*  } else {
-            Toast.makeText(getContext(), "Data is not presrnt", Toast.LENGTH_SHORT).show();
-        }
-*/
+
     }
 
 
