@@ -34,7 +34,6 @@ import java.util.List;
 public class CaptionSearchFragment extends Fragment implements View.OnClickListener {
 
     private ArrayList<MealDetails> searchList = new ArrayList<>();
-
     public AutoCompleteTextView mSearchEt;
     public ImageView mSearchIv;
     public RecyclerView mCaptionSearchRv;
@@ -63,7 +62,9 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
     }
 
     private void initilizeView() {
+
         mSearchIv.setOnClickListener(this);
+
         for (int i = 0; i < searchList.size(); i++) {
             String itemName = searchList.get(i).getItemName().toString().replace("\"", "");
             searchDataList.add(itemName);
@@ -87,14 +88,11 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
 
     private void searchFunction() {
 
-
         search = mSearchEt.getText().toString();
         for (int i = 0; i < searchDataList.size(); i++) {
 
             searchItemm = searchDataList.get(i).toString();
-
             Log.d("Caption", "item" + searchItemm);
-
         }
 
         mSearchedItemsList.add(search);
@@ -106,21 +104,4 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
         mSearchEt.setText("");
 
     }
-
-
-   /* public static void hideKeyboard(Context context) {
-        try {
-            ((Activity) context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            if ((((Activity) context).getCurrentFocus() != null) && (((Activity) context).getCurrentFocus().getWindowToken() != null)) {
-                ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((Activity) context).getCurrentFocus().getWindowToken(), 0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void showKeyboard(Context context) {
-        ((InputMethodManager) (context).getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-    }*/
-
 }
