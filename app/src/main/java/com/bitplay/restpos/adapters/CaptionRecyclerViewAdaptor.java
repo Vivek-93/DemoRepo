@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
     private ImageView decreseIv, increseIv;
     private Button proceedBtn;
     int counter = 0;
+    private EditText guestName,guestPhone,guestTable;
 
 
     public CaptionRecyclerViewAdaptor(Context context, String[] data) {
@@ -88,6 +90,9 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
                     decreseIv = (ImageView) tableInfoDialogBox.findViewById(R.id.caption_table_decrese_count);
                     increseIv = (ImageView) tableInfoDialogBox.findViewById(R.id.caption_table_increse_count);
                     counts = (TextView) tableInfoDialogBox.findViewById(R.id.caption_table_count);
+                    guestName=(EditText)tableInfoDialogBox.findViewById(R.id.caption_table_guest_name_et);
+                    guestPhone=(EditText)tableInfoDialogBox.findViewById(R.id.caption_table_guest_phone_et);
+                    guestTable=(EditText)tableInfoDialogBox.findViewById(R.id.caption_table_guest_table_et);
                     proceedBtn = (Button) tableInfoDialogBox.findViewById(R.id.caption_table_proceed_btn);
 
                     try {
@@ -132,7 +137,11 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(mContext, TableDetailsActivity.class);
+                            intent.putExtra("guestName", guestName.getText().toString());
+                            intent.putExtra("guestPhone", guestPhone.getText().toString());
+                            intent.putExtra("guestTable", guestTable.getText().toString());
                             mContext.startActivity(intent);
+                            tableInfoDialogBox.dismiss();
                         }
                     });
 
@@ -158,6 +167,7 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
                     public void onClick(View view) {
 
                         printBillInPDF();
+                        printDialogBox.dismiss();
                     }
                 });
 

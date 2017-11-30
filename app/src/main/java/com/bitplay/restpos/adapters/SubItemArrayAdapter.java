@@ -112,9 +112,11 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
                             bookedItems.setPrice(price);
                             bookeditemsList.add(bookedItems);
                             Log.d("list", "" + bookeditemsList.size());
-                            Intent intent = new Intent(mContext, TableDetailsActivity.class);
+                           /* Intent intent = new Intent(mContext, TableDetailsActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             mContext.startActivity(intent);
+*/
+                            additemsDialogBox.dismiss();
 
                         }
                     });

@@ -38,21 +38,20 @@ import java.util.ArrayList;
 
 public class TableDetailsActivity extends AppCompatActivity implements View.OnClickListener/*, AdapterView.OnItemSelectedListener */ {
 
-    /*  private RecyclerView listView;*/
     private SubItemArrayAdapter mSubItemArrayAdapter;
 
     public FrameLayout mFramelayout;
     private FragmentManager mFragmentManager;
-    /*  public TextView mSearch, mEmpty ,mCount;
-      public Spinner mSpinner;*/
-    public ImageView mBookedItems;
+    public ImageView mBookedItems, mBackIv;
 
     private Context context;
     private ArrayList<MealDetails> filterList;
+    public TextView mGuestName, mGuestPhone, mGuestTable, mKotNumber;
 
     private Button mCetogery, mSearch;
 
     ArrayList<BookedItems> list = new ArrayList<BookedItems>();
+    private String guestName, guestPhone, guestTable;
 
 
     @Override
@@ -60,14 +59,20 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        guestName = getIntent().getStringExtra("guestName");
+        guestPhone = getIntent().getStringExtra("guestPhone");
+        guestTable = getIntent().getStringExtra("guestTable");
         mCetogery = (Button) findViewById(R.id.act_table_details_catogery_btn);
         mSearch = (Button) findViewById(R.id.act_table_details_search_btn);
         mFramelayout = (FrameLayout) findViewById(R.id.act_table_details_framelayout);
-    /*    mSearch = (TextView) findViewById(R.id.search_et);
-        mSpinner = (Spinner) findViewById(R.id.act_table_spinner);*/
+        mGuestName = (TextView) findViewById(R.id.guest_name_tv);
+        mGuestPhone = (TextView) findViewById(R.id.guest_mobile_number_tv);
+        mGuestTable = (TextView) findViewById(R.id.guest_table_number_tv);
+        mKotNumber = (TextView) findViewById(R.id.guest_kot_number_tv);
+        mBackIv = (ImageView) findViewById(R.id.act_table_details_back_iv);
+
         mBookedItems = (ImageView) findViewById(R.id.act_table_details_toolbar_iv);
-       /* mEmpty = (TextView) findViewById(R.id.act_table_details_empty_tv);
-        mCount=(TextView)findViewById(R.id.act_table_details_count_toolbar_tv);*/
+
         context = TableDetailsActivity.this;
 
         initializeViews();
@@ -77,37 +82,22 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
     private void initializeViews() {
 
         readFileDataMethod();
+        mGuestName.setText("" + guestName);
+        mGuestPhone.setText("" + guestPhone);
+        mGuestTable.setText("" + guestTable);
 
         mFragmentManager = getSupportFragmentManager();
         openCatogeryFragment();
-   /*
-        listView = (RecyclerView) findViewById(R.id.listView);
-        listView.setHasFixedSize(true);
-        mItemArrayAdapter = new ItemArrayAdapter1(this, mealdetails);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        listView.setLayoutManager(mLayoutManager);
-        listView.setAdapter(mItemArrayAdapter);*/
 
-        //  searchFunction();
-
-        //   setSearchSpinnerData();
         mBookedItems.setOnClickListener(this);
         mSearch.setOnClickListener(this);
         mCetogery.setOnClickListener(this);
+        mBackIv.setOnClickListener(this);
 
     }
 
 
- /*   private void setSearchSpinnerData() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.cotegory, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
-        mSpinner.setOnItemSelectedListener(this);
-    }*/
-
-
-  ArrayList<MealDetails> mealdetails = new ArrayList<>();
+    ArrayList<MealDetails> mealdetails = new ArrayList<>();
 
     private void readFileDataMethod() {
         InputStream inputStream = getResources().openRawResource(R.raw.restaurant_menu_v);
@@ -136,57 +126,19 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
             e.printStackTrace();
         }
     }
-/*
 
-    private void searchFunction() {
-
-        mSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                s = s.toString().toLowerCase();
-                ArrayList<MealDetails> filteredList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    final String text = mealdetails.get(i).getItemName().toString().toLowerCase();
-                    if (text.contains(s)) {
-                        filteredList.add(mealdetails.get(i));
-                    }
-                }
-
-                listView.setLayoutManager(new LinearLayoutManager(TableDetailsActivity.this));
-                mItemArrayAdapter = new ItemArrayAdapter1(context, filteredList);
-                listView.setAdapter(mItemArrayAdapter);
-                mItemArrayAdapter.notifyDataSetChanged();  // data set changed
-            }
-
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-    }
-*/
 
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.act_table_details_toolbar_iv:
-                list = mSubItemArrayAdapter.getArrayList();
+                //   list = mSubItemArrayAdapter.getArrayList();
                 Intent intent = new Intent(TableDetailsActivity.this, BookedItemsActivity.class);
-                intent.putExtra("myList", list);
+              /*  intent.putExtra("myList", list);
                 Log.d("TableDetailsActivity", "list " + list);
 
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);*/
                 startActivity(intent);
                 break;
 
@@ -197,6 +149,11 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
             case R.id.act_table_details_search_btn:
                 openSearchFragment();
                 break;
+
+            case R.id.act_table_details_back_iv:
+                Intent intent1=new Intent(this,MainActivity.class);
+                startActivity(intent1);
+                break;
         }
 
     }
@@ -204,388 +161,33 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
     private void openSearchFragment() {
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("itemList",  mealdetails);
+        bundle.putSerializable("itemList", mealdetails);
         CaptionSearchFragment csf = new CaptionSearchFragment();
         csf.setArguments(bundle);
-        mFragmentManager.beginTransaction().replace(R.id.act_table_details_framelayout,csf).addToBackStack(null).commit();
+        mFragmentManager.beginTransaction().replace(R.id.act_table_details_framelayout, csf).addToBackStack(null).commit();
     }
 
     private void openCatogeryFragment() {
-        Bundle bundle =new Bundle();
-        bundle.putSerializable("itemlistCatogery",mealdetails);
-        CaptionCatogeryFragment ccf=new CaptionCatogeryFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("itemlistCatogery", mealdetails);
+        CaptionCatogeryFragment ccf = new CaptionCatogeryFragment();
         ccf.setArguments(bundle);
-        mFragmentManager.beginTransaction().replace(R.id.act_table_details_framelayout,ccf).addToBackStack(null).commit();
-    }
-
- /*   @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-        String selectedItem = parent.getItemAtPosition(position).toString();
-        switch (selectedItem) {
-            case "All items":
-                filterList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    filterList.add(mealdetails.get(i));
-                }
-                setDataInFilterList();
-
-                break;
-            case "Veg":
-                filterList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Veg")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-                setDataInFilterList();
-                break;
-
-            case "Non Veg.":
-                filterList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Non Veg.")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-                setDataInFilterList();
-                break;
-            case "Appetizer":
-                filterList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Appetizer")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-                setDataInFilterList();
-                break;
-            case "Beverages":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Beverages")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Breakfast":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Breakfast")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Burger":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Burger")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Chinese Main Course":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Chinese Main Course")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-
-
-            case "Chinese Starter":
-                filterList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Chinese Starter")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-                setDataInFilterList();
-                break;
-            case "Chinese Soups":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Chinese Soups")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Main Course Lamb":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Main Course Lamb")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Kitchen Beverages":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Kitchen Beverages")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Frecnch Roll Sandwich":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Frecnch Roll Sandwich")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-
-
-            case "Main Course Chicken":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Main Course Chicken")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Main Course Fish":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Main Course Fish")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Main Course Prawn":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Main Course Prawn")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-
-
-            case "Desserts":
-                filterList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Desserts")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-                setDataInFilterList();
-                break;
-            case "Main Course Extra":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Main Course Extra")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Extra Starter":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Extra Starter")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Rice Noodles":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Rice Noodles")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Salad":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Salad")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-
-            case "Sizzlers":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Sizzlers")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-
-
-            case "Soup":
-                filterList = new ArrayList<>();
-
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Soup")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-                setDataInFilterList();
-                break;
-            case "Main Course Salad":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Main Course Salad")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Sandwich":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Sandwich")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "Momos":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("Momos")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-            case "PIZZA":
-                filterList = new ArrayList<>();
-                for (int i = 0; i < mealdetails.size(); i++) {
-                    String burger = mealdetails.get(i).getCategory().toString();
-                    if (burger.contains("PIZZA")) {
-
-                        filterList.add(mealdetails.get(i));
-                    }
-                }
-
-                setDataInFilterList();
-                break;
-
-        }
+        mFragmentManager.beginTransaction().replace(R.id.act_table_details_framelayout, ccf).addToBackStack(null).commit();
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onBackPressed() {
 
+        Intent intent1=new Intent(this,MainActivity.class);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent1);
+        super.onBackPressed();
     }
-
-    private void setDataInFilterList() {
-
-        listView.setLayoutManager(new LinearLayoutManager(TableDetailsActivity.this));
-        mItemArrayAdapter = new ItemArrayAdapter1(context, filterList);
-        listView.setAdapter(mItemArrayAdapter);
-        mItemArrayAdapter.notifyDataSetChanged();
-    }*/
-
 
     @Override
     public void onResume() {
         super.onResume();
-
 
     }
 }

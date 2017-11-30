@@ -3,6 +3,7 @@ package com.bitplay.restpos.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bitplay.restpos.R;
+import com.bitplay.restpos.extra.SearchData;
 
 import java.util.List;
 
@@ -20,10 +22,10 @@ import java.util.List;
 public class CaptionSearchAdapter extends RecyclerView.Adapter<CaptionSearchAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<String> mSearch;
+    private List<SearchData> mSearch;
 
 
-    public CaptionSearchAdapter(Context context, List<String> search) {
+    public CaptionSearchAdapter(Context context, List<SearchData> search) {
         this.mContext = context;
         this.mSearch = search;
 
@@ -42,7 +44,10 @@ public class CaptionSearchAdapter extends RecyclerView.Adapter<CaptionSearchAdap
     public void onBindViewHolder(final CaptionSearchAdapter.ViewHolder holder, final int position) {
 
         holder.mSerailNo.setText("" + (position + 1) + ".");
-        holder.mSearchItemName.setText(mSearch.get(position).toString());
+        holder.mSearchItemName.setText(mSearch.get(position).getItemName().toString());
+
+        Log.d("CaptionSearchAdapter","quantity"+mSearch.get(position).getQuantity());
+        holder.mQuantity.setText(""+mSearch.get(position).getQuantity());
 
     }
 
@@ -55,7 +60,7 @@ public class CaptionSearchAdapter extends RecyclerView.Adapter<CaptionSearchAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mSearchItemName, mSerailNo;
+        public TextView mSearchItemName, mSerailNo ,mQuantity;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +68,7 @@ public class CaptionSearchAdapter extends RecyclerView.Adapter<CaptionSearchAdap
             itemView.setClickable(true);
             mSearchItemName = (TextView) itemView.findViewById(R.id.fragment_caption_search_item_tv);
             mSerailNo = (TextView) itemView.findViewById(R.id.fragment_caption_search_serial_tv);
+            mQuantity=(TextView)itemView.findViewById(R.id.fragment_caption_search_item_quantity_tv);
 
         }
     }

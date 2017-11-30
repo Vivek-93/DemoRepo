@@ -28,8 +28,8 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
     public ImageButton mRefresh;
 
     //  List<BookedItems> itemslist;
-    private ArrayList<BookedItems> myList = new ArrayList<>();
-    private ArrayList<UpdateItems> updateList=new ArrayList<>();
+  /*  private ArrayList<BookedItems> myList = new ArrayList<>();
+    private ArrayList<UpdateItems> updateList=new ArrayList<>();*/
     private int total;
     private int tota;
 
@@ -43,7 +43,7 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
         mLl = (LinearLayout) findViewById(R.id.act_booked_item_ll);
         mTotalBillPrice = (TextView) findViewById(R.id.act_booked_items_totalprice_tv);
         mRefresh=(ImageButton)findViewById(R.id.act_booked_items_refresh_ib);
-        myList = (ArrayList<BookedItems>) getIntent().getSerializableExtra("myList");
+     //   myList = (ArrayList<BookedItems>) getIntent().getSerializableExtra("myList");
 
         initilizeView();
     }
@@ -52,7 +52,7 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
 
         mRefresh.setOnClickListener(this);
 
-        for (int i = 0; i < myList.size(); i++) {
+       /* for (int i = 0; i < myList.size(); i++) {
             int quantity = Integer.parseInt(myList.get(i).getQuantity().replace("\"", ""));
             int basicPrice = Integer.parseInt(myList.get(i).getPrice().replace("\"", ""));
             total = total + quantity * basicPrice;
@@ -71,7 +71,7 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             mBookedRv.setLayoutManager(mLayoutManager);
             mBookedRv.setAdapter(mBookedItemsAdapter);
-        }
+        }*/
 
     }
 
@@ -81,7 +81,7 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.act_booked_items_refresh_ib:
 
-                updateList=mBookedItemsAdapter.getArrayList();
+          /*      updateList=mBookedItemsAdapter.getArrayList();
                 for(int i = 0; i<updateList.size(); i++) {
                     int price = updateList.get(i).getUpdatePrice();
                     int updateQun= Integer.parseInt(updateList.get(i).getUpdateQuantity().toString());
@@ -89,7 +89,7 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
                     tota=price*updateQun;
                 }
                 mTotalBillPrice.setText("" + tota + " Rs.");
-
+*/
                 return;
         }
     }
