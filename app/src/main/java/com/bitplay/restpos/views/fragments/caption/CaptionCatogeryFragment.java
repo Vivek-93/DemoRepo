@@ -101,21 +101,14 @@ public class CaptionCatogeryFragment extends Fragment {
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                 mSubCatogeryRv.setLayoutManager(mLayoutManager);
                 mSubCatogeryRv.setAdapter(mSubSubItemAdapter);
-              /*  mSubSubCatogeryRv.setHasFixedSize(true);
-                mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList, catogery);
-                mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
-                mSubSubCatogeryRv.setAdapter(mSubItemArrayAdapter);*/
+
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mCatogeryRecyclerView.setLayoutManager(mLayoutManager);
         mCatogeryRecyclerView.setAdapter(mItemArrayAdapter);
     }
-     /*  mSubSubCatogeryRv.setHasFixedSize(true);
-    mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList, catogery);
-                mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
-                mSubSubCatogeryRv.setAdapter(mSubItemArrayAdapter);
-    */
+
 
     @Override
     public void onResume() {

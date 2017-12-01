@@ -180,7 +180,7 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
     public void onBackPressed() {
 
         Intent intent1=new Intent(this,MainActivity.class);
-        intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent1);
         super.onBackPressed();
     }

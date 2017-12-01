@@ -19,8 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="User Name"
-            android:textColor="@color/colorBlack" />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="User"
+            android:textColor="@color/colorWhite" />
 
 
         <TextView
@@ -32,17 +34,17 @@
             android:maxLines="2"
             android:padding="5dp"
             android:text="Vivek kumar yadav"
-            android:textColor="@color/colorBlack"
-            android:textSize="21sp" />
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/act_main_userrole_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Caption"
-            android:visibility="invisible"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/colorBlack" />
+            android:textColor="@color/colorWhite" />
 
 
 

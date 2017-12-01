@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start"
-    tools:context="com.bitplay.restpos.views.activities.MainActivity">
+    tools:context="com.bitplay.restpos.views.activities.MainActivity"
+    tools:openDrawer="start">
 
 
     <include
@@ -28,15 +28,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:weightSum="1">
 
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="135dp"
-                android:layout_weight="10"
+                android:layout_weight=".9"
                 android:background="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/act_home_main_logout_tv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Logout"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite" />
 
 
         </LinearLayout>

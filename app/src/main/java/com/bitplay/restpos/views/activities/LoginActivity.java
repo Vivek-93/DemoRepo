@@ -72,6 +72,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if (databaseHelper.checkUser(mEmailET.getText().toString().trim(), mPasswordET.getText().toString().trim(), "Captain")) {
             Intent accountsIntent = new Intent(LoginActivity.this, MainActivity.class);
             accountsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            accountsIntent.putExtra("userName",mEmailET.getText().toString());
+            accountsIntent.putExtra("userRole","Captain");
             emptyInputEditText();
             startActivity(accountsIntent);
         } else if (databaseHelper.checkUser(mEmailET.getText().toString().trim(), mPasswordET.getText().toString().trim(), "Cashier")) {
