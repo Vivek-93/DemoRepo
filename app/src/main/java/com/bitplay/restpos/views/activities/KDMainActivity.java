@@ -7,10 +7,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.bitplay.restpos.R;
+import com.bitplay.restpos.adapters.KDMainAdapter;
 import com.bitplay.restpos.adapters.KdHomeViewPagerAdapter;
 
 public class KDMainActivity extends AppCompatActivity {
@@ -23,6 +26,9 @@ public class KDMainActivity extends AppCompatActivity {
 
     public TabLayout mKdTablayout;
     public ViewPager mKdViewPager;
+    public RecyclerView mKdMainRv;
+
+    private KDMainAdapter mKDMainAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,7 @@ public class KDMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_kdmain);
         mKdTablayout=(TabLayout)findViewById(R.id.act_kd_main_table_layout);
         mKdViewPager=(ViewPager)findViewById(R.id.act_kd_main_viewpager);
+        mKdMainRv=(RecyclerView)findViewById(R.id.act_kd_main_rv);
 
         initializeViews();
 
@@ -41,6 +48,17 @@ public class KDMainActivity extends AppCompatActivity {
 
         settingUpTabLayout();
         settingUpViewPager();
+        settingUpMainRecyclerView();
+
+    }
+
+    private void settingUpMainRecyclerView() {
+
+        mKdMainRv.setHasFixedSize(true);
+        mKDMainAdapter = new KDMainAdapter(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mKdMainRv.setLayoutManager(mLayoutManager);
+        mKdMainRv.setAdapter(mKDMainAdapter);
 
     }
 

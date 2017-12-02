@@ -3,6 +3,7 @@ package com.bitplay.restpos.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bitplay.restpos.R;
+import com.bitplay.restpos.extra.NewOrderList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,10 +23,12 @@ import java.util.List;
 public class NewOrderKDAdapter extends RecyclerView.Adapter<NewOrderKDAdapter.ViewHolder> {
 
     private Context mContext;
+    private List<NewOrderList> mOrderList =new ArrayList<NewOrderList>();
 
 
-    public NewOrderKDAdapter(Context context) {
+    public NewOrderKDAdapter(Context context, List<NewOrderList> newOrderList) {
         this.mContext = context;
+        this.mOrderList=newOrderList;
 
     }
 
@@ -39,28 +44,41 @@ public class NewOrderKDAdapter extends RecyclerView.Adapter<NewOrderKDAdapter.Vi
     @Override
     public void onBindViewHolder(final NewOrderKDAdapter.ViewHolder holder, final int position) {
 
+        Log.d("NewOrderAdapter","name"+mOrderList.get(position).getKot().toString());
+        holder.item_kot.setText(""+mOrderList.get(position).getKot().toString());
+        holder.item_name.setText(mOrderList.get(position).getItem_name().toString());
+        holder.item_quantity.setText(mOrderList.get(position).getQuantity().toString());
+        holder.item_table.setText(mOrderList.get(position).getTable_no().toString());
+        holder.item_order_time.setText(mOrderList.get(position).getOrder_time().toString());
+        holder.item_time_elapsed.setText(mOrderList.get(position).getTime_elapsed().toString());
+        holder.item_order_taken_by.setText(mOrderList.get(position).getOrder_taken_by().toString());
 
     }
 
 
     @Override
     public int getItemCount() {
-        return 10;
+        Log.d("NewOrderAdapter",""+mOrderList.size());
+        return mOrderList.size();
 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView item_Name;
-        public LinearLayout item_card;
+        public TextView item_kot,item_name,item_quantity,item_table,item_order_time ,item_time_elapsed,item_order_taken_by;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             itemView.setClickable(true);
-           /* item_Name = (TextView) itemView.findViewById(R.id.table_item_meal_name_tv);
-            item_card = (LinearLayout) itemView.findViewById(R.id.caption_linear_view_item);*/
+            item_kot = (TextView) itemView.findViewById(R.id.fag_new_order_rv_kot_tv);
+            item_name = (TextView) itemView.findViewById(R.id.fag_new_order_rv_item_name_tv);
+            item_quantity = (TextView) itemView.findViewById(R.id.fag_new_order_rv_qty_tv);
+            item_table = (TextView) itemView.findViewById(R.id.fag_new_order_rv_table_tv);
+            item_order_time = (TextView) itemView.findViewById(R.id.fag_new_order_rv_order_time_tv);
+            item_time_elapsed = (TextView) itemView.findViewById(R.id.fag_new_order_rv_time_elapsed_tv);
+            item_order_taken_by=(TextView)itemView.findViewById(R.id.item_order_taken_by_tv);
 
         }
     }

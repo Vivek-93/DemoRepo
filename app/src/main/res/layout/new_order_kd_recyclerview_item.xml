@@ -10,7 +10,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.05dp"
         android:background="@color/colorBlack" />
 
     <LinearLayout
@@ -20,9 +20,11 @@
         android:weightSum="10">
 
         <TextView
+            android:id="@+id/fag_new_order_rv_kot_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight=".9"
             android:gravity="center"
             android:text="KOT"
@@ -35,9 +37,11 @@
             android:background="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/fag_new_order_rv_item_name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1.5"
             android:gravity="center"
             android:text="Item name"
@@ -50,9 +54,11 @@
             android:background="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/fag_new_order_rv_qty_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight=".8"
             android:gravity="center"
             android:text="Qty"
@@ -65,9 +71,11 @@
             android:background="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/fag_new_order_rv_table_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1.4"
             android:gravity="center"
             android:text="Table#"
@@ -80,9 +88,11 @@
             android:background="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/fag_new_order_rv_order_time_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1.7"
             android:gravity="center"
             android:text="Order time"
@@ -95,9 +105,11 @@
             android:background="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/fag_new_order_rv_time_elapsed_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1.8"
             android:gravity="center"
             android:text="Time elapsed"
@@ -110,9 +122,12 @@
             android:background="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/item_order_taken_by_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="2.1"
             android:gravity="center"
             android:text="Order taken by"
@@ -123,7 +138,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height=".05dp"
         android:background="@color/colorBlack" />
 
 </LinearLayout>
