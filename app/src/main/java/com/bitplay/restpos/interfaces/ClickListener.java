@@ -1,9 +1,9 @@
-package com.example.bitplay1.restpos.interfaces;
+package com.bitplay.restpos.interfaces;
 
 import android.view.View;
 
 /**
- * Created by anees on 02-11-2017.
+ * Created by Vivek on 02-11-2017.
  */
 
 public interface ClickListener {
