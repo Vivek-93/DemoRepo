@@ -25,7 +25,7 @@ public class AppController extends SugarApp implements NetworkStateReceiverListe
 
     public static final String TAG = AppController.class.getSimpleName();
 
-    public static final int socketTimeout = 15000;//30 seconds - change to what you want
+    public static final int socketTimeout = 15000;//30 seconds- change to what you want
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;

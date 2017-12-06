@@ -52,7 +52,6 @@ public class Sharedpreferences {
     public static final String TAG_LOGGEDIN_USEREMAIL = "userEmailid";
     public static final String TAG_LOGGEDIN_USERIMAGE = "userImage";
 
-
     public static final String TAG_CURRENT_JD_ID = "jd_id";
 
 
