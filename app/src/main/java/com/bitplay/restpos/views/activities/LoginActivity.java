@@ -3,6 +3,7 @@ package com.bitplay.restpos.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,14 +14,22 @@ import android.widget.Toast;
 import com.bitplay.restpos.database.DatabaseHelper;
 import com.bitplay.restpos.extra.User;
 import com.bitplay.restpos.R;
+import com.bitplay.restpos.interfaces.login.ILoginPresenter;
+import com.bitplay.restpos.interfaces.login.ILoginView;
+import com.bitplay.restpos.interfaces.login.LoginPresenterImpl;
+import com.bitplay.restpos.models.login.LoginModel;
+import com.bitplay.restpos.utils.Utils;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener , ILoginView{
 
     private DatabaseHelper databaseHelper;
     public EditText mEmailET, mPasswordET;
     public Button mLoginButton;
     public TextView mForgotTv, mRegisterTv;
     public User user;
+
+    // LoginPresenter Instance
+    private ILoginPresenter mILoginPresenter;
 
 
     @Override
@@ -65,11 +74,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void login_func() {
         getAllDataValues();
 
+        mILoginPresenter.loginApiCall(mEmailET.getText().toString(), mPasswordET.getText().toString() );
 
-        if (mEmailET.getText().toString().length() == 0 && mPasswordET.getText().toString().length() == 0) {
+       /* if (mEmailET.getText().toString().length() == 0 && mPasswordET.getText().toString().length() == 0) {
 
             Toast.makeText(this, "Enter email and password", Toast.LENGTH_LONG).show();
-        } else if (databaseHelper.checkUser(mEmailET.getText().toString().trim(), mPasswordET.getText().toString().trim(), "Captain")) {
+        } else if (mLo.checkUser(mEmailET.getText().toString().trim(), mPasswordET.getText().toString().trim(), "Captain")) {
             Intent accountsIntent = new Intent(LoginActivity.this, MainActivity.class);
             accountsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             accountsIntent.putExtra("userName",mEmailET.getText().toString());
@@ -89,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else {
             // Snack Bar to show success message that record is wrong
             Toast.makeText(this, "Incorrect email and password", Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 
     private void getAllDataValues() {
@@ -116,5 +126,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void forgotPasswordFunc() {
         Toast.makeText(this, "Forgot password", Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onLoginSuccess(int pid, LoginModel loginModel) {
+
+        Utils.stopProgress(LoginActivity.this);
+        if (loginModel.getSelectRole()== "caption") {
+            Log.d("Current", "RoleType" + "inside");
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else if (loginModel.getSelectRole() == "cashier") {
+            Intent intent = new Intent(LoginActivity.this, CashierMainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
+
+
+    @Override
+    public void onLoginError(int pid, LoginModel loginErrorModel) {
+
+    //    Utils.stopProgress(LoginActivity.this);
+        Toast.makeText(this, "Login error", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mILoginPresenter = new LoginPresenterImpl(LoginActivity.this);
     }
 }

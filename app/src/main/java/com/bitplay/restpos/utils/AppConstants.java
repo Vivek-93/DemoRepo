@@ -7,25 +7,20 @@ import java.util.List;
 public class AppConstants {
 
 
-    public static int SUCCESS_CODE = 200;
+
     public static int TAG_ID_LOGIN = 100;
-    public static int TAG_ID_CLASS_LIST = 101;
-    public static int TAG_ID_REGISTER = 102;
-    public static int TAG_ID_FORGOT_PASSWORD_RESEND_OTP = 110;
-    public static int TAG_ID_SET_PASSWORD = 111;
-    public static int TAG_ID_SUBJECT_LIST = 128;
-    public static int TAG_ID_DELETE_A_QUESTION_PAPER = 171;
-    public static int TAG_ID_CLASS_LIST_UPDATED = 235;
 
 
-    public static String baseUrlInsideApp = "http://13.65.211.49:8000";
+
+    public static String baseUrlInsideApp = "http://localhost:58607";
 
     List<NameValuePair> params;
-    public static String serverUrl = "http://192.168.1.30:8000/app";
+    public static String serverUrl = "http://localhost:58607/api";
 
 
-    public static String termsUrl = "http://192.168.1.30:8000/app";
+    public static String termsUrl = "http://localhost:58607/api";
     public static boolean IS_LIVE_BUILD = false;
+
 
 
     private static String BASE_URL;
@@ -34,9 +29,9 @@ public class AppConstants {
 
     static {
         if (IS_LIVE_BUILD) {
-            WEBSERVICE_HOST = "http://192.168.1.30:8000/app";
+            WEBSERVICE_HOST = "http://localhost:58607/api";
         } else {
-            WEBSERVICE_HOST = "http://192.168.1.30:8000/app";
+            WEBSERVICE_HOST = "http://localhost:58607/api";
 
         }
         BASE_URL = WEBSERVICE_HOST;
@@ -51,19 +46,16 @@ public class AppConstants {
      */
     public enum URL {
 
-        CLASS_LIST("/student/class_list/"),
-        REGISTRATION("/student/user_register/"),
-        OTP_VERIFICATION("/student/user_otp_confirmation/"),
-        RESEND_OTP("/student/user_resend_otp_signup/"),
-        LOGIN("/student/user_login/"),
-        FORGOT_PASSWORD("/student/user_forgot_password/"),
-        LOGOUT("/student/user_logout/");
+
+
+        LOGIN("/Register/Login/");
+
 
 
 
         private String url;
 
-        public String baseUrl = "http://13.84.219.29:8000";
+        public String baseUrl = "http://localhost:58607";
         //public String baseUrl = "http://192.168.1.29:8000/";
 
         URL(String url) {
