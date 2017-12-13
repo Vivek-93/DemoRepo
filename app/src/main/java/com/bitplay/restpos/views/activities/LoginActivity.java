@@ -131,16 +131,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onLoginSuccess(int pid, LoginModel loginModel) {
 
+        Log.d("LoginActivity","success"+loginModel.getSelectRole().toString());
         Utils.stopProgress(LoginActivity.this);
-        if (loginModel.getSelectRole()== "caption") {
-            Log.d("Current", "RoleType" + "inside");
+        if (loginModel.getSelectRole().toString().equalsIgnoreCase("caption")) {
+            Log.d("LoginActivity", "RoleType" + "inside");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("userName",loginModel.getName().toString());
+            intent.putExtra("userRole",loginModel.getSelectRole().toString());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        } else if (loginModel.getSelectRole() == "cashier") {
+        } else if (loginModel.getSelectRole().toString().equalsIgnoreCase("cashier")) {
             Intent intent = new Intent(LoginActivity.this, CashierMainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+        }
+        else {
+            Toast.makeText(this, "Nothing is found", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -148,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onLoginError(int pid, LoginModel loginErrorModel) {
 
-    //    Utils.stopProgress(LoginActivity.this);
+        Utils.stopProgress(LoginActivity.this);
         Toast.makeText(this, "Login error", Toast.LENGTH_SHORT).show();
 
     }

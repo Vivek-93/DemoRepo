@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.adapters.CaptionRecyclerViewAdaptor;
 import com.bitplay.restpos.database.DatabaseHelper;
+import com.bitplay.restpos.models.login.LoginModel;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {

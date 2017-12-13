@@ -12,13 +12,13 @@ public class AppConstants {
 
 
 
-    public static String baseUrlInsideApp = "http://localhost:58607";
+    public static String baseUrlInsideApp = "http://192.168.1.21:8081/api";
 
     List<NameValuePair> params;
-    public static String serverUrl = "http://localhost:58607/api";
+    public static String serverUrl = "http://192.168.1.21:8081/api";
 
 
-    public static String termsUrl = "http://localhost:58607/api";
+    public static String termsUrl = "http://192.168.1.21:8081/api";
     public static boolean IS_LIVE_BUILD = false;
 
 
@@ -29,9 +29,9 @@ public class AppConstants {
 
     static {
         if (IS_LIVE_BUILD) {
-            WEBSERVICE_HOST = "http://localhost:58607/api";
+            WEBSERVICE_HOST = "http://192.168.1.21:8081/api";
         } else {
-            WEBSERVICE_HOST = "http://localhost:58607/api";
+            WEBSERVICE_HOST = "http://192.168.1.21:8081/api";
 
         }
         BASE_URL = WEBSERVICE_HOST;
@@ -55,7 +55,7 @@ public class AppConstants {
 
         private String url;
 
-        public String baseUrl = "http://localhost:58607";
+        public String baseUrl = "http://192.168.1.21:8081/api";
         //public String baseUrl = "http://192.168.1.29:8000/";
 
         URL(String url) {
