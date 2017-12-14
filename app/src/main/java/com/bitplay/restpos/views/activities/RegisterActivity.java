@@ -1,5 +1,6 @@
 package com.bitplay.restpos.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,26 +17,28 @@ import android.widget.Toast;
 import com.bitplay.restpos.database.DatabaseHelper;
 import com.bitplay.restpos.extra.User;
 import com.bitplay.restpos.R;
+import com.bitplay.restpos.interfaces.register.IRegisterPresenter;
+import com.bitplay.restpos.interfaces.register.IRegisterView;
+import com.bitplay.restpos.interfaces.register.RegisterPresenterImpl;
+import com.bitplay.restpos.models.register.RegisterModel;
+import com.bitplay.restpos.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,IRegisterView, AdapterView.OnItemSelectedListener  {
 
 
-    private final AppCompatActivity activity = RegisterActivity.this;
+  //  private final AppCompatActivity activity = RegisterActivity.this;
 
     public EditText regMobileNumber, regUserName, regEmail, regPass, regAddress, regFathers, regAadharno, regPan;
     public Spinner mSelectType;
     public ImageView regBackIv;
     public Button registerBtn;
+    private IRegisterPresenter mIRegisterPresenter;
 
     List<String> typesData;
-
-
-    private DatabaseHelper databaseHelper;
-    private User user;
-
 
     String nameValue, passwordValue, phoneNumValue, emailValue, addressValue, fathersnameValue, aadharValue, panValue;
     private String selectRole;
@@ -64,16 +67,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         initializeViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeViews();
+    }
+
     private void initializeViews() {
-
-        //upper//
+        mIRegisterPresenter= new RegisterPresenterImpl(RegisterActivity.this);
         mSelectType.setOnItemSelectedListener(this);
-        databaseHelper = new DatabaseHelper(activity);
-
-        user = new User();
-
-        Log.d("Data table", "created");
-
         setSpinnerData();
 
 
@@ -128,6 +130,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void attemptregister() {
 
 
+   //     mIRegisterPresenter.registerApiCall(regUserName.getText().toString(), mPasswordET.getText().toString() );
+
+        Log.d("RegisterActivity","btnclicked");
+
 
         gettingAllTheValues();
         getSpinnerData();
@@ -171,24 +177,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "Enter your Pan number", Toast.LENGTH_SHORT).show();
             regPan.setError("Enter your Pan number");
         }
-        if (!databaseHelper.checkUser(emailValue, passwordValue)) {
 
-            user.setName(nameValue);
-            user.setEmail(emailValue);
-            user.setPassword(passwordValue);
-            user.setMobile(phoneNumValue);
-            user.setFather(fathersnameValue);
-            user.setAddress(addressValue);
-            user.setAadhar(aadharValue);
-            user.setPan(panValue);
-            user.setRole(selectRole);
+        mIRegisterPresenter.registerApiCall(nameValue,phoneNumValue,emailValue,passwordValue,addressValue,fathersnameValue,aadharValue,panValue,selectRole);
 
-            //  user.setRole(typesData);
-            databaseHelper.addUser(user);
-            Toast.makeText(this, getString(R.string.success_message), Toast.LENGTH_LONG).show();
-            emptyInputEditText();
-        }
-
+        Log.d("RegisterActivity","presenter");
     }
 
 
@@ -244,4 +236,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
+
+    @Override
+    public void onRegisterSuccess(int pid, RegisterModel registerModel) {
+
+        Log.d("RegisterActivity","success");
+      //  Utils.stopProgress(RegisterActivity.this);
+        Log.d("RegisterActivity","success1");
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+          /*  intent.putExtra("userName",loginModel.getName().toString());
+            intent.putExtra("userRole",loginModel.getSelectRole().toString());*/
+            startActivity(intent);
+
+
+    }
+
+    @Override
+    public void onRegisterError(int pid, RegisterModel registerErrorModel) {
+
+        Utils.stopProgress(RegisterActivity.this);
+        Toast.makeText(this, "Register error", Toast.LENGTH_SHORT).show();
+
+    }
+
 }

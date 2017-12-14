@@ -22,11 +22,10 @@ import com.bitplay.restpos.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener , ILoginView{
 
-    private DatabaseHelper databaseHelper;
+
     public EditText mEmailET, mPasswordET;
     public Button mLoginButton;
     public TextView mForgotTv, mRegisterTv;
-    public User user;
 
     // LoginPresenter Instance
     private ILoginPresenter mILoginPresenter;
@@ -51,7 +50,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initilizeView() {
 
-        databaseHelper = new DatabaseHelper(this);
     }
 
     @Override
@@ -130,11 +128,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onLoginSuccess(int pid, LoginModel loginModel) {
-
-        Log.d("LoginActivity","success"+loginModel.getSelectRole().toString());
         Utils.stopProgress(LoginActivity.this);
-        if (loginModel.getSelectRole().toString().equalsIgnoreCase("caption")) {
-            Log.d("LoginActivity", "RoleType" + "inside");
+        if (loginModel.getSelectRole().toString().equalsIgnoreCase("Captain")) {
+            Log.d("LoginActivity",""+loginModel.getSelectRole().toString());
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("userName",loginModel.getName().toString());
             intent.putExtra("userRole",loginModel.getSelectRole().toString());
@@ -145,9 +141,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-        else {
-            Toast.makeText(this, "Nothing is found", Toast.LENGTH_SHORT).show();
-        }
+
+        Log.d("LoginActivity","success"+loginModel.getName().toString());
+
+           // Utils.stopProgress(LoginActivity.this);
+
     }
 
 

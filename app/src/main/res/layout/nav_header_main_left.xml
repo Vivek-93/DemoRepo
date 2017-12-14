@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_marginTop="15dp"
+    android:id="@+id/drawer_header_cv"
     android:background="@color/colorPrimary">
 
     <LinearLayout

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
     private DatabaseHelper helper;
     private String name, role;
+    private CardView mHeaderCv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         hrHomeActDrawerLayout = (DrawerLayout) findViewById(R.id.main_act_drawer_layout);
         mLeftNavView = (NavigationView) findViewById(R.id.mainActLeftNavView);
         View header = mLeftNavView.getHeaderView(0);
+        mHeaderCv=(CardView)header.findViewById(R.id.drawer_header_cv);
         mUserName = (TextView) header.findViewById(R.id.act_main_username_tv);
         mUserRole = (TextView) header.findViewById(R.id.act_main_userrole_tv);
         mLogout = (TextView) findViewById(R.id.act_home_main_logout_tv);
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void settingClickListner() {
         mHamBurgerIconIV.setOnClickListener(this);
+        mHeaderCv.setOnClickListener(this);
     }
 
 
@@ -94,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.mainActHamBurgerIconIV:
                 hrHomeActDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
+
+            case R.id.drawer_header_cv:
+                Intent intent=new Intent(MainActivity.this,UserProfileActivity.class);
+                startActivity(intent);
         }
     }
 

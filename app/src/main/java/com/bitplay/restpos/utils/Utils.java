@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -56,9 +57,11 @@ import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bitplay.restpos.R;
 import com.bitplay.restpos.interfaces.networkstate.NetworkStateReceiverListener;
 
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -80,7 +83,6 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 
@@ -115,27 +117,27 @@ public class Utils {
     public static boolean editable = false;
 
     public static ProgressDialog progressSimple;
-    public static SweetAlertDialog progress;
+    public static ProgressDialog progress;
     public static Bitmap bitmap = null;
 
 
     public static String refreshedFirebaseTokenValue = "";
 
     public static void showProgress(Context context) {
-//        progress = new ProgressDialog(context);
-//        progress.setMessage("Please Wait");
-//        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        progress.setCancelable(false);
-//
-//        // if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//        Drawable drawable = new ProgressBar(context).getIndeterminateDrawable().mutate();
-//        drawable.setColorFilter(ContextCompat.getColor(context, R.color.colorAccent),
-//                PorterDuff.Mode.SRC_IN);
-//        progress.setIndeterminateDrawable(drawable);
-//        //  }
-//
-//        progress.show();
-        try {
+        progress = new ProgressDialog(context);
+        progress.setMessage("Please Wait");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
+
+        // if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        Drawable drawable = new ProgressBar(context).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(context, R.color.colorAccent),
+                PorterDuff.Mode.SRC_IN);
+        progress.setIndeterminateDrawable(drawable);
+        //  }
+
+        progress.show();
+      /*  try {
             progress = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
             progress.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
             progress.setTitleText("");
@@ -146,7 +148,7 @@ public class Utils {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void showProgress(Context context, String message) {
