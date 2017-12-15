@@ -6,11 +6,11 @@
     <!-- <stroke
          android:width="5dp"
          android:color="#cccccc" />-->
-    <solid android:color="@color/color_blue_btn"></solid>
+    <solid android:color="@color/colorLightGray"></solid>
 
     <corners
-        android:bottomLeftRadius="45dp"
-        android:bottomRightRadius="45dp"
-        android:topLeftRadius="45dp"
-        android:topRightRadius="45dp" />
+        android:bottomLeftRadius="2dp"
+        android:bottomRightRadius="2dp"
+        android:topLeftRadius="2dp"
+        android:topRightRadius="2dp" />
 </shape>

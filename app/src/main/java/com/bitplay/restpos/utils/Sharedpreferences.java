@@ -42,17 +42,16 @@ public class Sharedpreferences {
     public static final String TAG_AUTH_TOKEN = "userauthtoken";
 
     public static final String TAG_USER_NAME = "username";
+    public static final String TAG_USER_ROLE= "userrole";
 
     public static final String TAG_USER_COMING_FROM = "comingfrom";
 
     public static final String LOGINSTATUS = "login_status";
     public static final String ACTIVATION_STATUS = "activation_status";
     public static final String TAG_LOGGEDIN_USERNAME = "username";
-    public static final String TAG_LOGGEDIN_TIME = "loggedInTime";
     public static final String TAG_LOGGEDIN_USEREMAIL = "userEmailid";
     public static final String TAG_LOGGEDIN_USERIMAGE = "userImage";
 
-    public static final String TAG_CURRENT_JD_ID = "jd_id";
 
 
     public Sharedpreferences(Context c) {
@@ -127,7 +126,7 @@ public class Sharedpreferences {
     }
 
     /*
-            *  Auth Token
+            *  User Name
             **/
     public String getUsername() {
         return pref.getString(TAG_USER_NAME, "");
@@ -141,20 +140,29 @@ public class Sharedpreferences {
         }
     }
 
-    /*
-    *  JD ID Logged in hr id
-    **/
-    public String getCurrentJdId() {
-        return pref.getString(TAG_CURRENT_JD_ID, "");
+    public String getUserRole() {
+        return pref.getString(TAG_USER_ROLE, "");
     }
-
-    public void setCurrentJdId(String jd_id) {
+    public void setUserRole(String userrole) {
         try {
-            editor.putString(TAG_CURRENT_JD_ID, jd_id);
+            editor.putString(TAG_USER_ROLE, userrole);
             editor.commit();
         } catch (Exception e) {
         }
     }
+    public String getUserId() {
+        return pref.getString(TAG_USER_ID, "");
+    }
+
+    public void setUserId(String userid) {
+        try {
+            editor.putString(TAG_USER_ID, userid);
+            editor.commit();
+        } catch (Exception e) {
+        }
+    }
+
+
 
 
     /**
@@ -193,18 +201,6 @@ public class Sharedpreferences {
     public void setIMEINumber(String imeiNumber) {
         try {
             editor.putString(TAG_IEMI_NUMBER, imeiNumber);
-            editor.commit();
-        } catch (Exception e) {
-        }
-    }
-
-    public String getUserId() {
-        return pref.getString(TAG_USER_ID, "");
-    }
-
-    public void setUserId(String userid) {
-        try {
-            editor.putString(TAG_USER_ID, userid);
             editor.commit();
         } catch (Exception e) {
         }
@@ -292,18 +288,6 @@ public class Sharedpreferences {
         }
     }
 
-    //Loggedin time
-    public String getLoggedInTime() {
-        return pref.getString(TAG_LOGGEDIN_TIME, "");
-    }
-
-    public void setLoggedInTime(String loggedInTime) {
-        try {
-            editor.putString(TAG_LOGGEDIN_TIME, loggedInTime);
-            editor.commit();
-        } catch (Exception e) {
-        }
-    }
 
     //Loggedin useremailid
     public String getLoggedInUserEmailid() {

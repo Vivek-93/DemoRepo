@@ -16,8 +16,23 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp">
 
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="User Name"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/act_user_profile_name_tv"
@@ -28,48 +43,66 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:singleLine="true"
-            android:text="Ram"
+            android:text=""
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Mobile Number"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/act_user_profile_mobileno_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/edittext_background"
             android:drawablePadding="8dp"
+            android:maxLength="10"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:singleLine="true"
-            android:text="9458704539"
+            android:text=""
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Email"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/act_user_profile_email_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/edittext_background"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:singleLine="true"
-            android:text="Email@gmail.com"
+            android:text=""
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Role"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/act_user_profile_role_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/edittext_background"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -81,10 +114,17 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Assress"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
             android:id="@+id/act_user_profile_address_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:background="@drawable/edittext_background"
             android:gravity="center_vertical"
             android:minHeight="40dp"
@@ -96,10 +136,17 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Father's name"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
             android:id="@+id/act_user_profile_father_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/edittext_background"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
@@ -110,34 +157,47 @@
             android:textSize="16sp" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Aadhar Number"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
             android:id="@+id/act_user_profile_aadhar_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/edittext_background"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorBlack"
             android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:singleLine="true"
             android:text="Aadhar Number"
+            android:textColor="@color/colorBlack"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Pan Number"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/act_user_profile_pan_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/edittext_background"
-            android:text="PAN"
             android:gravity="center_vertical"
-            android:textColor="@color/colorBlack"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:singleLine="true"
+            android:text="PAN"
+            android:textColor="@color/colorBlack"
             android:textSize="16sp" />
-
-
 
 
     </LinearLayout>

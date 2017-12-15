@@ -27,10 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,IRegisterView, AdapterView.OnItemSelectedListener  {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, IRegisterView, AdapterView.OnItemSelectedListener {
 
 
-  //  private final AppCompatActivity activity = RegisterActivity.this;
+    //  private final AppCompatActivity activity = RegisterActivity.this;
 
     public EditText regMobileNumber, regUserName, regEmail, regPass, regAddress, regFathers, regAadharno, regPan;
     public Spinner mSelectType;
@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         registerBtn.setOnClickListener(this);
         regBackIv.setOnClickListener(this);
 
+        mIRegisterPresenter = new RegisterPresenterImpl(RegisterActivity.this);
         initializeViews();
     }
 
@@ -74,13 +75,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initializeViews() {
-        mIRegisterPresenter= new RegisterPresenterImpl(RegisterActivity.this);
+        mIRegisterPresenter = new RegisterPresenterImpl(RegisterActivity.this);
         mSelectType.setOnItemSelectedListener(this);
         setSpinnerData();
 
 
     }
-
 
 
     @Override
@@ -130,9 +130,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void attemptregister() {
 
 
-   //     mIRegisterPresenter.registerApiCall(regUserName.getText().toString(), mPasswordET.getText().toString() );
+        //     mIRegisterPresenter.registerApiCall(regUserName.getText().toString(), mPasswordET.getText().toString() );
 
-        Log.d("RegisterActivity","btnclicked");
+        Log.d("RegisterActivity", "btnclicked");
 
 
         gettingAllTheValues();
@@ -178,9 +178,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             regPan.setError("Enter your Pan number");
         }
 
-        mIRegisterPresenter.registerApiCall(nameValue,phoneNumValue,emailValue,passwordValue,addressValue,fathersnameValue,aadharValue,panValue,selectRole);
+        mIRegisterPresenter.registerApiCall(nameValue, phoneNumValue, emailValue, passwordValue, addressValue, fathersnameValue, aadharValue, panValue, selectRole);
 
-        Log.d("RegisterActivity","presenter");
+        Log.d("RegisterActivity", "presenter");
     }
 
 
@@ -240,13 +240,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onRegisterSuccess(int pid, RegisterModel registerModel) {
 
-        Log.d("RegisterActivity","success");
-      //  Utils.stopProgress(RegisterActivity.this);
-        Log.d("RegisterActivity","success1");
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        Log.d("RegisterActivity", "success");
+        Utils.stopProgress(RegisterActivity.this);
+        Log.d("RegisterActivity", "success1");
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
           /*  intent.putExtra("userName",loginModel.getName().toString());
             intent.putExtra("userRole",loginModel.getSelectRole().toString());*/
-            startActivity(intent);
+        startActivity(intent);
 
 
     }

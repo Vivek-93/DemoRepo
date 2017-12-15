@@ -39,15 +39,19 @@ public class ProfileDetailsPresenterImpl implements IProfileDetailsPresenter , O
     @Override
     public void profileDetailApiCall(int id) {
 
-        if (NetworkStatus.checkNetworkStatus(mUserProfileActivity)) {
-            Utils.showProgress(mUserProfileActivity);
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("id", String.valueOf(id));
-            Log.d("params", "" + params.toString());
-            mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_PROFILE_DETAILS,
-                    AppConstants.URL.PROFILEDETAILS.getUrl(), params);
-        } else {
-            Utils.showToast(mUserProfileActivity, "Please connect to internet");
+        try {
+            if (NetworkStatus.checkNetworkStatus(mUserProfileActivity)) {
+                Utils.showProgress(mUserProfileActivity);
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", String.valueOf(id));
+                Log.d("params", "" + params.toString());
+                mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_PROFILE_DETAILS,
+                        AppConstants.URL.PROFILEDETAILS.getUrl(), params);
+            } else {
+                Utils.showToast(mUserProfileActivity, "Please connect to internet");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

@@ -18,9 +18,10 @@ import com.bitplay.restpos.interfaces.login.ILoginPresenter;
 import com.bitplay.restpos.interfaces.login.ILoginView;
 import com.bitplay.restpos.interfaces.login.LoginPresenterImpl;
 import com.bitplay.restpos.models.login.LoginModel;
+import com.bitplay.restpos.utils.Sharedpreferences;
 import com.bitplay.restpos.utils.Utils;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener , ILoginView{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ILoginView {
 
 
     public EditText mEmailET, mPasswordET;
@@ -29,6 +30,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // LoginPresenter Instance
     private ILoginPresenter mILoginPresenter;
+
+    // Shared Preferences
+    private Sharedpreferences mPrefs;
 
 
     @Override
@@ -49,6 +53,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initilizeView() {
+
+        mPrefs = Sharedpreferences.getUserDataObj(this);
 
     }
 
@@ -72,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void login_func() {
         getAllDataValues();
 
-        mILoginPresenter.loginApiCall(mEmailET.getText().toString(), mPasswordET.getText().toString() );
+        mILoginPresenter.loginApiCall(mEmailET.getText().toString(), mPasswordET.getText().toString());
 
        /* if (mEmailET.getText().toString().length() == 0 && mPasswordET.getText().toString().length() == 0) {
 
@@ -130,10 +136,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onLoginSuccess(int pid, LoginModel loginModel) {
         Utils.stopProgress(LoginActivity.this);
         if (loginModel.getSelectRole().toString().equalsIgnoreCase("Captain")) {
-            Log.d("LoginActivity",""+loginModel.getSelectRole().toString());
+            Log.d("LoginActivity", "" + loginModel.getSelectRole().toString());
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("userName",loginModel.getName().toString());
-            intent.putExtra("userRole",loginModel.getSelectRole().toString());
+            mPrefs.setUsername(loginModel.getName().toString());
+            mPrefs.setUserRole(loginModel.getSelectRole().toString());
+            mPrefs.setUserId(loginModel.getId().toString());
+         //   mPrefs.setUserId(loginModel.getId().toString());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (loginModel.getSelectRole().toString().equalsIgnoreCase("cashier")) {
@@ -142,9 +150,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         }
 
-        Log.d("LoginActivity","success"+loginModel.getName().toString());
+        Log.d("LoginActivity", "success" + loginModel.getName().toString());
 
-           // Utils.stopProgress(LoginActivity.this);
+        // Utils.stopProgress(LoginActivity.this);
 
     }
 

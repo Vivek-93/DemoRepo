@@ -1,6 +1,7 @@
 package com.bitplay.restpos.views.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,7 @@ import com.bitplay.restpos.R;
 import com.bitplay.restpos.adapters.CaptionRecyclerViewAdaptor;
 import com.bitplay.restpos.database.DatabaseHelper;
 import com.bitplay.restpos.models.login.LoginModel;
+import com.bitplay.restpos.utils.Sharedpreferences;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -33,14 +35,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseHelper helper;
     private String name, role;
     private CardView mHeaderCv;
+    public Sharedpreferences mPref = Sharedpreferences.getUserDataObj(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_main);
-        name = getIntent().getStringExtra("userName");
+      /*  name = getIntent().getStringExtra("userName");
         role = getIntent().getStringExtra("userRole");
-        Log.d("mainact", "" + name + role);
+        Log.d("mainact", "" + name + role);*/
         captionRV = (RecyclerView) findViewById(R.id.act_home_caption_rv);
         mHamBurgerIconIV = (ImageView) findViewById(R.id.mainActHamBurgerIconIV);
 
@@ -71,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mUserRole = (TextView) header.findViewById(R.id.act_main_userrole_tv);
         mLogout = (TextView) findViewById(R.id.act_home_main_logout_tv);
 
-        mUserName.setText(name);
-        mUserRole.setText(role);
+        mUserName.setText(mPref.getUsername().toString());
+        mUserRole.setText(mPref.getUserRole().toString());
 
         mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
