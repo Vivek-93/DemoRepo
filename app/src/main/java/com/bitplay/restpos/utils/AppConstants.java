@@ -11,6 +11,7 @@ public class AppConstants {
     public static int TAG_ID_LOGIN = 101;
     public static int TAG_ID_REGISTER= 102;
     public static int TAG_ID_PROFILE_DETAILS= 103;
+    public static int TAG_ID_PROFILE_UPDATE= 104;
 
 
 
@@ -53,7 +54,8 @@ public class AppConstants {
 
         LOGIN("/Values/Login/"),
         REGISTER("/Values/Add"),
-        PROFILEDETAILS("Values/UserDetail");
+        PROFILEDETAILS("Values/UserDetail"),
+        PROFILEUPDATE("Values/Update");
 
 
 

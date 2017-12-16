@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,13 +44,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String nameValue, passwordValue, phoneNumValue, emailValue, addressValue, fathersnameValue, aadharValue, panValue;
     private String selectRole;
     private String label;
-    private String TAG = "RegisterActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         regUserName = (EditText) findViewById(R.id.reg_act_name_et);
         regMobileNumber = (EditText) findViewById(R.id.reg_act_mobileno_et);
         regEmail = (EditText) findViewById(R.id.reg_act_email_et);
@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initializeViews() {
-        mIRegisterPresenter = new RegisterPresenterImpl(RegisterActivity.this);
+        // mIRegisterPresenter = new RegisterPresenterImpl(RegisterActivity.this);
         mSelectType.setOnItemSelectedListener(this);
         setSpinnerData();
 
@@ -87,11 +87,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onItemSelected(AdapterView<?> parent, View view, int position,
                                long id) {
         // On selecting a spinner item
-        label = parent.getItemAtPosition(position).toString();
+     //   label = parent.getItemAtPosition(position).toString();
 
         // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "You selected: " + label,
-                Toast.LENGTH_LONG).show();
+      /*  Toast.makeText(parent.getContext(), "You selected: " + label,
+                Toast.LENGTH_LONG).show();*/
 
     }
 
@@ -131,78 +131,50 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
         //     mIRegisterPresenter.registerApiCall(regUserName.getText().toString(), mPasswordET.getText().toString() );
-
-        Log.d("RegisterActivity", "btnclicked");
-
-
         gettingAllTheValues();
         getSpinnerData();
-
         if (regUserName.getText().toString().length() == 0) {
             Toast.makeText(this, "Name cant be blank", Toast.LENGTH_SHORT).show();
             regUserName.setError("Name cant be blank");
 
-        }
-        if (regPass.getText().toString().length() == 0) {
-            Toast.makeText(this, "Password cant be blank", Toast.LENGTH_SHORT).show();
-            regPass.setError("Password cant be blank");
-
-        }
-        if (regMobileNumber.getText().toString().length() == 0) {
+        }else if (regMobileNumber.getText().toString().length() == 0) {
             Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
             regMobileNumber.setError("Enter a valid number");
 
-        }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(regEmail.getText().toString()).matches()) {
+        }  else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(regEmail.getText().toString()).matches()) {
             Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
             regEmail.setError("Invalid Email");
 
-        }
-        if (regAddress.getText().toString().length() == 0) {
+        }  else if (regPass.getText().toString().length() == 0) {
+            Toast.makeText(this, "Password cant be blank", Toast.LENGTH_SHORT).show();
+            regPass.setError("Password cant be blank");
+
+        }else if (regAddress.getText().toString().length() == 0) {
             Toast.makeText(this, "Enter a address", Toast.LENGTH_SHORT).show();
             regAddress.setError("Enter a address");
 
-        }
-        if (regFathers.getText().toString().length() == 0) {
+        } else if (regFathers.getText().toString().length() == 0) {
             Toast.makeText(this, "Enter your father's name", Toast.LENGTH_SHORT).show();
             regFathers.setError("Enter your father's name");
 
-        }
-        if (regAadharno.getText().toString().length() == 0) {
+        } else if (regAadharno.getText().toString().length() == 0) {
             Toast.makeText(this, "Enter Aadhar number", Toast.LENGTH_SHORT).show();
             regAadharno.setError("Enter Aadhar number");
 
-        }
-        if (regPan.getText().toString().length() == 0) {
+        } else if (regPan.getText().toString().length() == 0) {
             Toast.makeText(this, "Enter your Pan number", Toast.LENGTH_SHORT).show();
             regPan.setError("Enter your Pan number");
+        } else {
+            mIRegisterPresenter.registerApiCall(nameValue, phoneNumValue, emailValue, passwordValue, addressValue, fathersnameValue, aadharValue, panValue, selectRole);
+            emptyInputEditText();
+
         }
 
-        mIRegisterPresenter.registerApiCall(nameValue, phoneNumValue, emailValue, passwordValue, addressValue, fathersnameValue, aadharValue, panValue, selectRole);
-
-        Log.d("RegisterActivity", "presenter");
     }
 
 
     private void getSpinnerData() {
-
         selectRole = mSelectType.getSelectedItem().toString();
-
-        if (selectRole.equalsIgnoreCase("Select a role")) {
-            Toast.makeText(this, "Select a role", Toast.LENGTH_SHORT).show();
-        } else if (selectRole.equalsIgnoreCase("Captain")) {
-            Toast.makeText(RegisterActivity.this, "Captiaon", Toast.LENGTH_SHORT).show();
-
-        } else if (selectRole.equalsIgnoreCase("Cashier")) {
-            Toast.makeText(RegisterActivity.this, "Cashier", Toast.LENGTH_SHORT).show();
-
-        } else if (selectRole.equalsIgnoreCase("Kitchen Display")) {
-            Toast.makeText(RegisterActivity.this, "Kitchen Display", Toast.LENGTH_SHORT).show();
-
-        } else if (selectRole.isEmpty()) {
-            Toast.makeText(this, "select any role", Toast.LENGTH_SHORT).show();
-
-        }
     }
 
     private void emptyInputEditText() {
@@ -239,15 +211,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onRegisterSuccess(int pid, RegisterModel registerModel) {
-
         Log.d("RegisterActivity", "success");
         Utils.stopProgress(RegisterActivity.this);
         Log.d("RegisterActivity", "success1");
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-          /*  intent.putExtra("userName",loginModel.getName().toString());
-            intent.putExtra("userRole",loginModel.getSelectRole().toString());*/
         startActivity(intent);
-
 
     }
 
@@ -258,5 +226,4 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Toast.makeText(this, "Register error", Toast.LENGTH_SHORT).show();
 
     }
-
 }

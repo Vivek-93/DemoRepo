@@ -80,30 +80,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mILoginPresenter.loginApiCall(mEmailET.getText().toString(), mPasswordET.getText().toString());
 
-       /* if (mEmailET.getText().toString().length() == 0 && mPasswordET.getText().toString().length() == 0) {
-
-            Toast.makeText(this, "Enter email and password", Toast.LENGTH_LONG).show();
-        } else if (mLo.checkUser(mEmailET.getText().toString().trim(), mPasswordET.getText().toString().trim(), "Captain")) {
-            Intent accountsIntent = new Intent(LoginActivity.this, MainActivity.class);
-            accountsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            accountsIntent.putExtra("userName",mEmailET.getText().toString());
-            accountsIntent.putExtra("userRole","Captain");
-            emptyInputEditText();
-            startActivity(accountsIntent);
-        } else if (databaseHelper.checkUser(mEmailET.getText().toString().trim(), mPasswordET.getText().toString().trim(), "Cashier")) {
-            Intent accountsIntent = new Intent(LoginActivity.this, CashierMainActivity.class);
-            accountsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            emptyInputEditText();
-            startActivity(accountsIntent);
-        } else if (databaseHelper.checkUser(mEmailET.getText().toString().trim(), mPasswordET.getText().toString().trim(), "Kitchen Display")) {
-            Intent accountsIntent = new Intent(LoginActivity.this, KDMainActivity.class);
-            accountsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            emptyInputEditText();
-            startActivity(accountsIntent);
-        } else {
-            // Snack Bar to show success message that record is wrong
-            Toast.makeText(this, "Incorrect email and password", Toast.LENGTH_LONG).show();
-        }*/
     }
 
     private void getAllDataValues() {

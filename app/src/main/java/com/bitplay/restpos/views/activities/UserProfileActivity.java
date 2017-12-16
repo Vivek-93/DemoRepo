@@ -1,6 +1,7 @@
 package com.bitplay.restpos.views.activities;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,9 +26,10 @@ import com.bitplay.restpos.utils.Utils;
 public class UserProfileActivity extends AppCompatActivity implements IProfileDetailsView, View.OnClickListener {
 
     public TextView profileMobileNumber, profileUserName, profileEmail, profileAddress, profileFathers, profileAadharno, profilePan, profileRole;
-    public ImageView mBackIv;
+    public ImageView mBackIv ,mEditImage,mEditDoneIv;
     private Sharedpreferences mPref = Sharedpreferences.getUserDataObj(UserProfileActivity.this);
     private IProfileDetailsPresenter mIProfileDetailsPresenter;
+    public String Tag ="UserProfileActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class UserProfileActivity extends AppCompatActivity implements IProfileDe
         profilePan = (TextView) findViewById(R.id.act_user_profile_pan_tv);
         profileRole = (TextView) findViewById(R.id.act_user_profile_role_tv);
         mBackIv = (ImageView) findViewById(R.id.act_user_profile_back_iv);
+        mEditImage=(ImageView)findViewById(R.id.act_user_profile_edit_iv);
+        mEditDoneIv=(ImageView)findViewById(R.id.act_user_profile_edit_done_iv);
         mIProfileDetailsPresenter = new ProfileDetailsPresenterImpl(UserProfileActivity.this);
         initializeViews();
 
@@ -48,8 +53,9 @@ public class UserProfileActivity extends AppCompatActivity implements IProfileDe
 
 
     private void initializeViews() {
-        Log.d("UserProfileActivity","whats is id"+mPref.getUserId());
+
         mBackIv.setOnClickListener(this);
+        mEditImage.setOnClickListener(this);
         try {
             mIProfileDetailsPresenter.profileDetailApiCall(Integer.parseInt(mPref.getUserId()));
 
@@ -83,7 +89,6 @@ public class UserProfileActivity extends AppCompatActivity implements IProfileDe
     @Override
     protected void onResume() {
         super.onResume();
-
         mIProfileDetailsPresenter = new ProfileDetailsPresenterImpl(UserProfileActivity.this);
     }
 
@@ -93,9 +98,38 @@ public class UserProfileActivity extends AppCompatActivity implements IProfileDe
         switch (view.getId()) {
             case R.id.act_user_profile_back_iv:
                 Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
+
+            case R.id.act_user_profile_edit_iv:
+                userProfileEditFun();
+                break;
+
+
         }
 
+    }
+
+    private void userProfileEditFun() {
+        Intent intent=new Intent(UserProfileActivity.this,UserProfileUpdateActivity.class);
+        intent.putExtra("name",profileUserName.getText().toString());
+        intent.putExtra("mobilenumber",profileMobileNumber.getText().toString());
+        intent.putExtra("email",profileEmail.getText().toString());
+        intent.putExtra("address",profileAddress.getText().toString());
+        intent.putExtra("father",profileFathers.getText().toString());
+        intent.putExtra("aadhar",profileAadharno.getText().toString());
+        intent.putExtra("pan",profilePan.getText().toString());
+        intent.putExtra("role",profileRole.getText().toString());
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent= new Intent(UserProfileActivity.this,MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
     }
 }

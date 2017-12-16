@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bitplay.restpos.views.activities.MainActivity">
+    tools:context="com.bitplay.restpos.views.activities.UserProfileUpdateActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,34 +17,37 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/mainActHamBurgerIconIV"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".1"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:padding="6dp"
-                    android:tint="@color/colorPrimary"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/hamburger" />
+                    android:id="@+id/act_user_profile_update_back_iv"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_arrow_back"
+                    android:layout_centerVertical="true"
+                    android:tint="@color/colorPrimary"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update Profile"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
 
-            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_user_profile_update" />
 
 
 </android.support.design.widget.CoordinatorLayout>

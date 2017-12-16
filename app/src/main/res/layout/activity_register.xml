@@ -28,9 +28,10 @@
                     android:id="@+id/reg_act_back_iv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".1"
+                    android:layout_weight=".11"
                     android:tint="@color/colorPrimary"
-                    android:padding="5dp" />
+                    android:src="@drawable/ic_arrow_back"
+                    android:padding="4dp" />
 
 
                 <TextView

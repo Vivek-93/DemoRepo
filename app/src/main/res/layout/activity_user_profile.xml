@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/main_background"
     android:layout_height="match_parent"
     tools:context="com.bitplay.restpos.views.activities.UserProfileActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
         android:background="@android:color/transparent"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -38,7 +38,7 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="User Profile"
+                   android:text="Profile"
                    android:textSize="20sp"
                    android:textColor="@color/colorPrimary"
                  android:textStyle="bold"

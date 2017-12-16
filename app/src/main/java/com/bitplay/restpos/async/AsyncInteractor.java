@@ -3,6 +3,7 @@ package com.bitplay.restpos.async;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -12,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.bitplay.restpos.AppController;
 import com.bitplay.restpos.utils.AppConstants;
 import com.bitplay.restpos.utils.Sharedpreferences;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,6 +82,7 @@ public class AsyncInteractor implements IAsyncInteractor {
 
 
     }
+
     public void onPostMethodServerCall(final OnRequestListener listener, final int pid,
                                        String url, final Map<String, String> stringMap) {
 
@@ -109,7 +112,7 @@ public class AsyncInteractor implements IAsyncInteractor {
                             if (error.networkResponse.data != null) {
                                 try {
                                     body = new String(error.networkResponse.data, "UTF-8");
-                                    Log.d("TAG_CANDIDATE_REGISTER", "error --" + body);
+                                    Log.d("TAG_ID_LOGIN", "error --" + body);
                                     listener.onRequestCompletionError(pid, body);
 
                                 } catch (UnsupportedEncodingException e) {
@@ -134,7 +137,7 @@ public class AsyncInteractor implements IAsyncInteractor {
 
             // Adding request to volley request queue
             AppController.getInstance().addToRequestQueue(stringRequest);
-        }else if (pid == AppConstants.TAG_ID_REGISTER) {
+        } else if (pid == AppConstants.TAG_ID_REGISTER) {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
@@ -160,7 +163,7 @@ public class AsyncInteractor implements IAsyncInteractor {
                             if (error.networkResponse.data != null) {
                                 try {
                                     body = new String(error.networkResponse.data, "UTF-8");
-                                    Log.d("TAG_CANDIDATE_REGISTER", "error --" + body);
+                                    Log.d("TAG_ID_REGISTER", "error --" + body);
                                     listener.onRequestCompletionError(pid, body);
 
                                 } catch (UnsupportedEncodingException e) {
@@ -183,7 +186,7 @@ public class AsyncInteractor implements IAsyncInteractor {
             };
             // Adding request to volley request queue
             AppController.getInstance().addToRequestQueue(stringRequest);
-        }else if (pid == AppConstants.TAG_ID_PROFILE_DETAILS) {
+        } else if (pid == AppConstants.TAG_ID_PROFILE_DETAILS) {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
@@ -209,7 +212,56 @@ public class AsyncInteractor implements IAsyncInteractor {
                             if (error.networkResponse.data != null) {
                                 try {
                                     body = new String(error.networkResponse.data, "UTF-8");
-                                    Log.d("TAG_CANDIDATE_REGISTER", "error --" + body);
+                                    Log.d("TAG_ID_PROFILE_DETAILS", "error --" + body);
+                                    listener.onRequestCompletionError(pid, body);
+
+                                } catch (UnsupportedEncodingException e) {
+                                    error.printStackTrace();
+                                }
+                            }
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return stringMap;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> header = new HashMap<String, String>();
+                    //header.put("Content-Type", "application/json; charset=UTF-8");
+                    return header;
+                }
+            };
+            // Adding request to volley request queue
+            AppController.getInstance().addToRequestQueue(stringRequest);
+        } else if (pid == AppConstants.TAG_ID_PROFILE_UPDATE) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d(TAG, "api call" + response.toString());
+                            System.out.println(response);
+                            try {
+                                listener.onRequestCompletion(pid, response);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("hello", ":" + error.toString());
+                            VolleyLog.e("Error: ", error.getMessage());
+
+                            String body;
+                            //get response body and parse with appropriate encoding
+                            if (error.networkResponse.data != null) {
+                                try {
+                                    body = new String(error.networkResponse.data, "UTF-8");
+                                    Log.d("TAG_ID_PROFILE_UPDATE", "error --" + body);
                                     listener.onRequestCompletionError(pid, body);
 
                                 } catch (UnsupportedEncodingException e) {

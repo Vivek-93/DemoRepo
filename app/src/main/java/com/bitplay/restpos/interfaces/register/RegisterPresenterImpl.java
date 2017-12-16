@@ -4,14 +4,10 @@ import android.util.Log;
 
 import com.bitplay.restpos.async.AsyncInteractor;
 import com.bitplay.restpos.async.OnRequestListener;
-import com.bitplay.restpos.interfaces.login.ILoginPresenter;
-import com.bitplay.restpos.interfaces.login.ILoginView;
-import com.bitplay.restpos.models.login.LoginModel;
 import com.bitplay.restpos.models.register.RegisterModel;
 import com.bitplay.restpos.utils.AppConstants;
 import com.bitplay.restpos.utils.NetworkStatus;
 import com.bitplay.restpos.utils.Utils;
-import com.bitplay.restpos.views.activities.LoginActivity;
 import com.bitplay.restpos.views.activities.RegisterActivity;
 import com.google.gson.Gson;
 
@@ -63,7 +59,6 @@ public class RegisterPresenterImpl implements IRegisterPresenter, OnRequestListe
         }
 
     }
-
 
     @Override
     public void onRequestCompletion(int pid, JSONObject responseJson, JSONArray responseArray) {

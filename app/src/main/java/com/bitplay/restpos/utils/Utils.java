@@ -134,21 +134,8 @@ public class Utils {
         drawable.setColorFilter(ContextCompat.getColor(context, R.color.colorAccent),
                 PorterDuff.Mode.SRC_IN);
         progress.setIndeterminateDrawable(drawable);
-        //  }
-
         progress.show();
-      /*  try {
-            progress = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-            progress.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-            progress.setTitleText("");
-            progress.setCancelable(false);
-            progress.show();
 
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     public static void showProgress(Context context, String message) {

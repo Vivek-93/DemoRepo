@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.drawer_header_cv:
                 Intent intent=new Intent(MainActivity.this,UserProfileActivity.class);
+                hrHomeActDrawerLayout.closeDrawer(Gravity.LEFT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
         }
     }

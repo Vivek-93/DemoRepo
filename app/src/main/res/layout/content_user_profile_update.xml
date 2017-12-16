@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.bitplay.restpos.views.activities.UserProfileActivity"
-    tools:showIn="@layout/activity_user_profile">
+    tools:context="com.bitplay.restpos.views.activities.UserProfileUpdateActivity"
+    tools:showIn="@layout/activity_user_profile_update">
 
 
     <LinearLayout
@@ -29,26 +28,16 @@
                 android:layout_centerInParent="true"
                 android:src="@mipmap/ic_launcher" />
 
-            <ImageView
-                android:id="@+id/act_user_profile_edit_iv"
+            <Button
+                android:id="@+id/act_user_profile_edit_done_btn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
+                android:textSize="10dp"
                 android:background="@drawable/edittext_background"
-                android:padding="10dp"
-                android:src="@drawable/ic_edit"
-                android:tint="@color/colorPrimary" />
+                android:text="DONE"
+                android:textColor="@color/colorBlack" />
 
-            <ImageView
-                android:id="@+id/act_user_profile_edit_done_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/edittext_background"
-                android:padding="8dp"
-                android:src="@drawable/ic_add_shopping"
-                android:tint="@color/colorPrimary"
-                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -61,8 +50,8 @@
             android:text="User Name"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_name_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_name_et"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edittext_background"
@@ -82,14 +71,15 @@
             android:text="Mobile Number"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_mobileno_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_mobileno_et"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edittext_background"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:maxLength="10"
+            android:inputType="number"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text=""
@@ -104,8 +94,8 @@
             android:text="Email"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_email_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_email_et"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edittext_background"
@@ -126,8 +116,8 @@
             android:text="Role"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_role_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_role_et"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edittext_background"
@@ -148,8 +138,8 @@
             android:text="Assress"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_address_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_address_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background"
@@ -170,8 +160,8 @@
             android:text="Father's name"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_father_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_father_et"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edittext_background"
@@ -191,13 +181,14 @@
             android:text="Aadhar Number"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_aadhar_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_aadhar_et"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edittext_background"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:inputType="number"
             android:paddingRight="10dp"
             android:singleLine="true"
             android:text=""
@@ -212,8 +203,8 @@
             android:text="Pan Number"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/act_user_profile_pan_tv"
+        <EditText
+            android:id="@+id/act_user_profile_update_pan_et"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edittext_background"
