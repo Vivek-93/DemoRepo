@@ -18,10 +18,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bitplay.restpos.models.tabledetails.TableDetailModel;
 import com.bitplay.restpos.views.activities.BillPdfViewActivity;
 import com.bitplay.restpos.views.activities.MainActivity;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 import com.bitplay.restpos.R;
+
+import java.util.List;
 
 /**
  * Created by Vivek yadav on 18-10-2017.
@@ -30,7 +33,7 @@ import com.bitplay.restpos.R;
 public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecyclerViewAdaptor.ViewHolder> {
 
     MainActivity homeActivity;
-    String[] data;
+    private List<TableDetailModel> data;
     private Context mContext;
 
     private Dialog printDialogBox, tableInfoDialogBox;
@@ -41,7 +44,7 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
     private EditText guestName,guestPhone,guestTable;
 
 
-    public CaptionRecyclerViewAdaptor(Context context, String[] data) {
+    public CaptionRecyclerViewAdaptor(Context context, List<TableDetailModel> data) {
         this.mContext = context;
         this.data = data;
 
@@ -57,26 +60,9 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
 
     @Override
     public void onBindViewHolder(final CaptionRecyclerViewAdaptor.ViewHolder holder, final int position) {
-        String table = data[position];
-        holder.myTextView.setText(table);
 
-        if ( position==3) {
-            holder.itemView.setBackgroundColor(Color.YELLOW);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(mContext,TableDetailsActivity.class);
-                    mContext.startActivity(intent);
-                }
-            });
+        holder.myTextView.setText(data.get(position).getTablenumber().toString());
 
-        }else if(position==4){
-            holder.itemView.setBackgroundColor(Color.GREEN);
-            holder.itemView.setClickable(false);
-        }else if(position==5){
-            holder.itemView.setBackgroundColor(Color.GRAY);
-            holder.itemView.setClickable(false);
-        }else {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,7 +133,6 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
 
                 }
             });
-        }
 
         holder.printBillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,7 +180,7 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

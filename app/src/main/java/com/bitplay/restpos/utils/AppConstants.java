@@ -12,17 +12,16 @@ public class AppConstants {
     public static int TAG_ID_REGISTER= 102;
     public static int TAG_ID_PROFILE_DETAILS= 103;
     public static int TAG_ID_PROFILE_UPDATE= 104;
+    public static int TAG_ID_TABLE_DETAILS=106;
 
 
-
-
-    public static String baseUrlInsideApp = "http://192.168.1.21:8082/api";
+    public static String baseUrlInsideApp = "http://192.168.1.106:8082/api";
 
     List<NameValuePair> params;
-    public static String serverUrl = "http://192.168.1.21:8082/api";
+    public static String serverUrl = "http://192.168.1.106:8082/api";
 
 
-    public static String termsUrl = "http://192.168.1.21:8082/api";
+    public static String termsUrl = "http://192.168.1.106:8082/api";
     public static boolean IS_LIVE_BUILD = false;
 
 
@@ -33,9 +32,9 @@ public class AppConstants {
 
     static {
         if (IS_LIVE_BUILD) {
-            WEBSERVICE_HOST = "http://192.168.0.82:8082/api/";
+            WEBSERVICE_HOST = "http://192.168.0.106:8082/api";
         } else {
-            WEBSERVICE_HOST = "http://192.168.0.82:8082/api/";
+            WEBSERVICE_HOST = "http://192.168.0.106:8082/api";
 
         }
         BASE_URL = WEBSERVICE_HOST;
@@ -54,15 +53,16 @@ public class AppConstants {
 
         LOGIN("/Values/Login/"),
         REGISTER("/Values/Add"),
-        PROFILEDETAILS("Values/UserDetail"),
-        PROFILEUPDATE("Values/Update");
+        PROFILEDETAILS("/Values/UserDetail"),
+        PROFILEUPDATE("/Values/Update"),
+        TABLEDETAILS("/Restaurant/tableDetail");
 
 
 
 
         private String url;
 
-        public String baseUrl = "http://192.168.0.82:8082/api/";
+        public String baseUrl = "http://192.168.0.106:8082/api";
         //public String baseUrl = "http://192.168.1.29:8000/";
 
         URL(String url) {
