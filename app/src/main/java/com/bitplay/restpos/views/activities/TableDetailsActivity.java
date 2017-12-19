@@ -36,7 +36,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-public class TableDetailsActivity extends AppCompatActivity implements View.OnClickListener/*, AdapterView.OnItemSelectedListener */ {
+public class TableDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SubItemArrayAdapter mSubItemArrayAdapter;
 
@@ -81,7 +81,7 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
 
     private void initializeViews() {
 
-        readFileDataMethod();
+        //readFileDataMethod();
         mGuestName.setText("" + guestName);
         mGuestPhone.setText("" + guestPhone);
         mGuestTable.setText("" + guestTable);
@@ -133,12 +133,8 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
 
         switch (view.getId()) {
             case R.id.act_table_details_toolbar_iv:
-                //   list = mSubItemArrayAdapter.getArrayList();
-                Intent intent = new Intent(TableDetailsActivity.this, BookedItemsActivity.class);
-              /*  intent.putExtra("myList", list);
-                Log.d("TableDetailsActivity", "list " + list);
 
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);*/
+                Intent intent = new Intent(TableDetailsActivity.this, BookedItemsActivity.class);
                 startActivity(intent);
                 break;
 
@@ -160,19 +156,19 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
 
     private void openSearchFragment() {
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("itemList", mealdetails);
+      //  Bundle bundle = new Bundle();
+      //  bundle.putSerializable("itemList", mealdetails);
         CaptionSearchFragment csf = new CaptionSearchFragment();
-        csf.setArguments(bundle);
+     //   csf.setArguments(bundle);
         mFragmentManager.beginTransaction().replace(R.id.act_table_details_framelayout, csf).addToBackStack(null).commit();
     }
 
     private void openCatogeryFragment() {
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("itemlistCatogery", mealdetails);
+       // Bundle bundle = new Bundle();
+       // bundle.putSerializable("itemlistCatogery", mealdetails);
         CaptionCatogeryFragment ccf = new CaptionCatogeryFragment();
-        ccf.setArguments(bundle);
+      //  ccf.setArguments(bundle);
         mFragmentManager.beginTransaction().replace(R.id.act_table_details_framelayout, ccf).addToBackStack(null).commit();
     }
 

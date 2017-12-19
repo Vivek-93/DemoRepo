@@ -77,10 +77,48 @@ public class AsyncInteractor implements IAsyncInteractor {
     public void registrationMethod(final OnRequestListener listener, final int pid, final String url, final Map<String, String> parasmMap) {
         onPostMethodServerCall(listener, pid, url, parasmMap);
     }
-
     public void getJsonObjectResponse(final OnRequestListener listener, final int pid, String url) {
 
 
+        if (pid == AppConstants.TAG_ID_MENU_CATEGORY) {
+            Log.i(TAG, "TAG_ID_MENU_CATEGORY" + url);
+            AppController.getInstance().getRequestQueue().getCache().invalidate(url, true);
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i(TAG, "TAG_ID_MENU_CATEGORY" + response.toString());
+                            System.out.println(response);
+                            try {
+                                listener.onRequestCompletion(pid, response.toString());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("hello", ":" + error.toString());
+                            listener.onRequestCompletionError(pid, error.toString());
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> header = new HashMap<String, String>();
+                    header.put("Content-Type", "application/json; charset=UTF-8");
+                    return header;
+                }
+            };
+            // Adding request to volley request queue
+            AppController.getInstance().addToRequestQueue(stringRequest);
+        }
     }
 
     public void onPostMethodServerCall(final OnRequestListener listener, final int pid,

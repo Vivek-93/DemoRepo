@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.bitplay.restpos.async.AsyncInteractor;
 import com.bitplay.restpos.async.OnRequestListener;
-import com.bitplay.restpos.models.register.RegisterModel;
 import com.bitplay.restpos.utils.AppConstants;
 import com.bitplay.restpos.utils.NetworkStatus;
 import com.bitplay.restpos.utils.Utils;
@@ -28,7 +27,7 @@ public class RegisterPresenterImpl implements IRegisterPresenter, OnRequestListe
     private IRegisterView mIRegisterView;
     private RegisterActivity mRegisterActivity;
     private AsyncInteractor mAsyncInteractor;
-    private RegisterModel mRegisterModel;
+    private String mRegisterModel;
 
     public RegisterPresenterImpl(IRegisterView mIRegisterView) {
         this.mIRegisterView = mIRegisterView;
@@ -70,12 +69,12 @@ public class RegisterPresenterImpl implements IRegisterPresenter, OnRequestListe
 
         if (pid == AppConstants.TAG_ID_REGISTER) {
 
-            if (responseJson != null) {
+            if (responseJson == null) {
 
+                Log.d("RegisterImpl","comming1");
                 Gson gson = new Gson();
-
-                mRegisterModel= gson.fromJson(responseJson, RegisterModel.class);
-
+                mRegisterModel= gson.toJson(responseJson);
+                Log.d("RegisterImpl","comming2");
                 mIRegisterView.onRegisterSuccess(pid, mRegisterModel);
             } else {
               //  mIRegisterView.onLoginError(pid, mRegisterModel.getMeta().getStatus());

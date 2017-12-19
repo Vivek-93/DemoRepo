@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.extra.BookedItems;
 import com.bitplay.restpos.extra.MealDetails;
+import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 
 import java.util.ArrayList;
@@ -34,18 +35,18 @@ import java.util.List;
 
 public class ItemArrayAdapter extends RecyclerView.Adapter<ItemArrayAdapter.ViewHolder> {
 
-    private List<String> data;
+    private List<MenuCategoryModel> data;
     private Context mContext;
     private final CatogeryonClick mClick;
     private final int pos;
     private int row_index=-1;
 
     public interface CatogeryonClick {
-        void onClicked(String data, int pos);
+        void onClicked(MenuCategoryModel data, int pos);
 
     }
 
-    public ItemArrayAdapter(Context context, int pos, List<String> data, CatogeryonClick mClick) {
+    public ItemArrayAdapter(Context context, int pos, List<MenuCategoryModel> data, CatogeryonClick mClick) {
         this.mContext = context;
         this.pos = pos;
         this.data = data;
@@ -65,7 +66,7 @@ public class ItemArrayAdapter extends RecyclerView.Adapter<ItemArrayAdapter.View
     public void onBindViewHolder(final ItemArrayAdapter.ViewHolder holder, final int position) {
 
 
-        holder.item_Name.setText(data.get(position).toString().replace("\"",""));
+        holder.item_Name.setText(data.get(position).getCategory().toString());
         holder.item_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -2,7 +2,6 @@ package com.bitplay.restpos.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,18 +14,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.bitplay.restpos.database.DatabaseHelper;
-import com.bitplay.restpos.extra.User;
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.interfaces.register.IRegisterPresenter;
 import com.bitplay.restpos.interfaces.register.IRegisterView;
 import com.bitplay.restpos.interfaces.register.RegisterPresenterImpl;
-import com.bitplay.restpos.models.register.RegisterModel;
 import com.bitplay.restpos.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, IRegisterView, AdapterView.OnItemSelectedListener {
 
@@ -64,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         registerBtn.setOnClickListener(this);
         regBackIv.setOnClickListener(this);
 
-        mIRegisterPresenter = new RegisterPresenterImpl(RegisterActivity.this);
+
         initializeViews();
     }
 
@@ -75,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initializeViews() {
+        mIRegisterPresenter = new RegisterPresenterImpl(RegisterActivity.this);
         // mIRegisterPresenter = new RegisterPresenterImpl(RegisterActivity.this);
         mSelectType.setOnItemSelectedListener(this);
         setSpinnerData();
@@ -210,17 +206,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onRegisterSuccess(int pid, RegisterModel registerModel) {
-        Log.d("RegisterActivity", "success");
+    public void onRegisterSuccess(int pid, String registerModel) {
+
         Utils.stopProgress(RegisterActivity.this);
-        Log.d("RegisterActivity", "success1");
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(intent);
+      if (registerModel.equals(0)){
+          Toast.makeText(this, "Email Id is already registered", Toast.LENGTH_SHORT).show();
+
+      }else {
+          Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+          startActivity(intent);
+      }
 
     }
 
     @Override
-    public void onRegisterError(int pid, RegisterModel registerErrorModel) {
+    public void onRegisterError(int pid, String registerErrorModel) {
 
         Utils.stopProgress(RegisterActivity.this);
         Toast.makeText(this, "Register error", Toast.LENGTH_SHORT).show();

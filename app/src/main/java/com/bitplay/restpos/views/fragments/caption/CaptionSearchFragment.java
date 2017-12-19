@@ -70,8 +70,8 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
         mSearchEt = (AutoCompleteTextView) view.findViewById(R.id.fragment_caption_search_et);
         mSearchIv = (ImageView) view.findViewById(R.id.fragment_caption_search_iv);
         mCaptionSearchRv = (RecyclerView) view.findViewById(R.id.fragment_caption_search_rv);
-        searchList = (ArrayList<MealDetails>) getArguments().getSerializable("itemList");
-        Log.d("captionSearchFragment", "List" + searchList.get(0).getItemName().toString());
+      //  searchList = (ArrayList<MealDetails>) getArguments().getSerializable("itemList");
+      //  Log.d("captionSearchFragment", "List" + searchList.get(0).getItemName().toString());
         initilizeView();
 
         return view;
@@ -81,15 +81,15 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
 
         mSearchIv.setOnClickListener(this);
 
-        for (int i = 0; i < searchList.size(); i++) {
+      /*  for (int i = 0; i < searchList.size(); i++) {
             String itemName = searchList.get(i).getItemName().toString().replace("\"", "");
             searchDataList.add(itemName);
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, searchDataList);
+*/
+      /*  ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, searchDataList);
         //  mSearchEt.setThreshold(6);
         mSearchEt.setThreshold(1);
-        mSearchEt.setAdapter(adapter);
+        mSearchEt.setAdapter(adapter);*/
 
     }
 

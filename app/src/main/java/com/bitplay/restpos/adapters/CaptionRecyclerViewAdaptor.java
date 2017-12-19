@@ -24,6 +24,7 @@ import com.bitplay.restpos.views.activities.MainActivity;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 import com.bitplay.restpos.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ import java.util.List;
 public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecyclerViewAdaptor.ViewHolder> {
 
     MainActivity homeActivity;
-    private List<TableDetailModel> data;
+    private List<TableDetailModel> data = new ArrayList<>();
     private Context mContext;
 
     private Dialog printDialogBox, tableInfoDialogBox;

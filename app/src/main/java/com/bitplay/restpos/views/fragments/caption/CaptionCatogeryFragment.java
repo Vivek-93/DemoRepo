@@ -1,8 +1,11 @@
 package com.bitplay.restpos.views.fragments.caption;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,26 +22,30 @@ import com.bitplay.restpos.adapters.ItemArrayAdapter1;
 import com.bitplay.restpos.adapters.SubItemArrayAdapter;
 import com.bitplay.restpos.adapters.SubSubItemAdapter;
 import com.bitplay.restpos.extra.MealDetails;
+import com.bitplay.restpos.interfaces.menucategory.IMenuCategoryView;
+import com.bitplay.restpos.interfaces.menucategory.MenuCategoryPresenterImpl;
+import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
+import com.bitplay.restpos.models.tabledetails.TableDetailModel;
+import com.bitplay.restpos.utils.Utils;
+import com.bitplay.restpos.views.activities.TableDetailsActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.bitplay.restpos.utils.Utils.context;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CaptionCatogeryFragment extends Fragment {
+public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryView {
 
-    public RecyclerView mCatogeryRecyclerView, mSubSubCatogeryRv,mSubCatogeryRv;
+    public RecyclerView mCatogeryRecyclerView, mSubSubCatogeryRv, mSubCatogeryRv;
     private ArrayList<MealDetails> mList = new ArrayList<>();
-    private List<String> catogeryList = new ArrayList<>();
-    {
-        catogeryList.add("Break fast");
-        catogeryList.add("Lunch");
-        catogeryList.add("Eve meal");
-        catogeryList.add("Dinner");
+    private List<MenuCategoryModel> catogeryList = new ArrayList<>();
 
-    }
-    private List<String> subCatogeryList=new ArrayList<String>();
+    private List<String> subCatogeryList = new ArrayList<String>();
+
     {
         subCatogeryList.add("Beverages");
         subCatogeryList.add("Burger");
@@ -58,6 +65,11 @@ public class CaptionCatogeryFragment extends Fragment {
     private SubItemArrayAdapter mSubItemArrayAdapter;
     private SubSubItemAdapter mSubSubItemAdapter;
 
+    private Context mContext;
+    private TableDetailsActivity mTableDetailsActivity;
+    private FragmentManager mFragmentManager;
+    private MenuCategoryPresenterImpl mMenuCategoryPresenter;
+
     public CaptionCatogeryFragment() {
         // Required empty public constructor
     }
@@ -67,31 +79,41 @@ public class CaptionCatogeryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_caption_catogery, container, false);
         mCatogeryRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_caption_catogery_rv);
         mSubSubCatogeryRv = (RecyclerView) view.findViewById(R.id.fragment_caption_sub_sub_catogery_rv);
-        mSubCatogeryRv=(RecyclerView)view.findViewById(R.id.fragment_caption_sub_catogery_rv);
-        mList = (ArrayList<MealDetails>) getArguments().getSerializable("itemlistCatogery");
+        mSubCatogeryRv = (RecyclerView) view.findViewById(R.id.fragment_caption_sub_catogery_rv);
+        //    mList = (ArrayList<MealDetails>) getArguments().getSerializable("itemlistCatogery");
         initializeView();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mContext = getContext();
+
+        mTableDetailsActivity = (TableDetailsActivity) getActivity();
+        mFragmentManager = mTableDetailsActivity.getSupportFragmentManager();
+        mMenuCategoryPresenter = new MenuCategoryPresenterImpl(this);
+        mMenuCategoryPresenter.getMenuCategoryApi();
     }
 
     private void initializeView() {
 
         mCatogeryRecyclerView.setHasFixedSize(true);
-        settingUpRecyclerView();
+
 
     }
 
     private void settingUpRecyclerView() {
         mItemArrayAdapter = new ItemArrayAdapter(getContext(), pos, catogeryList, new ItemArrayAdapter.CatogeryonClick() {
             @Override
-            public void onClicked(String catogery, int pos) {
+            public void onClicked(MenuCategoryModel catogery, int pos) {
                 Log.d("CaptionCatogery", "" + pos);
 
-
-                mSubSubItemAdapter =new SubSubItemAdapter(getContext(), position, subCatogeryList, new SubSubItemAdapter.SubCatogeryonClick() {
+                mSubSubItemAdapter = new SubSubItemAdapter(getContext(), position, subCatogeryList, new SubSubItemAdapter.SubCatogeryonClick() {
                     @Override
                     public void onClicked(String data, int pos) {
 
-                        Log.d("CaptionFragment",""+data);
+                        Log.d("CaptionFragment", "" + data);
                         mSubSubCatogeryRv.setHasFixedSize(true);
                         mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList, data);
                         mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -113,5 +135,24 @@ public class CaptionCatogeryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void getMenuCategoryApiSuccess(int pid, MenuCategoryModel[] menuCategoryModel) {
+
+        Utils.stopProgress(context);
+        catogeryList = Arrays.asList(menuCategoryModel);
+        if (menuCategoryModel != null) {
+            Log.d("CCF", "" + "hi");
+            settingUpRecyclerView();
+        } else {
+            Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void getMenuCategoryApiError(int pid, String errorData) {
+
     }
 }

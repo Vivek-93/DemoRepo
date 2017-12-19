@@ -3,6 +3,8 @@ package com.bitplay.restpos.models.tabledetails;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONArray;
+
 public class TableDetailModel {
 
     @SerializedName("id")
@@ -93,5 +95,6 @@ public class TableDetailModel {
     public void setPrince(Object prince) {
         this.prince = prince;
     }
+
 
 }

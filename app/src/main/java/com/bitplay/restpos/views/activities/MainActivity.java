@@ -26,8 +26,15 @@ import com.bitplay.restpos.models.login.LoginModel;
 import com.bitplay.restpos.models.tabledetails.TableDetailModel;
 import com.bitplay.restpos.utils.Sharedpreferences;
 import com.bitplay.restpos.utils.Utils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -39,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public RecyclerView captionRV;
     public TextView mUserName, mUserRole, mLogout;
     private CaptionRecyclerViewAdaptor captionRecyclerViewAdaptor;
-
-    public Button click;
     private List<TableDetailModel> data;
     private CardView mHeaderCv;
     public Sharedpreferences mPref = Sharedpreferences.getUserDataObj(MainActivity.this);
@@ -52,19 +57,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home_main);
         captionRV = (RecyclerView) findViewById(R.id.act_home_caption_rv);
         mHamBurgerIconIV = (ImageView) findViewById(R.id.mainActHamBurgerIconIV);
-        click = (Button) findViewById(R.id.click);
-
 
         initilizeView();
     }
 
     private void initilizeView() {
-        data = new ArrayList<TableDetailModel>();
-        Log.d("MainActivity", "user id" + Integer.parseInt(mPref.getUserId()));
-        settingNavigtionView();
 
+        data = new ArrayList<>();
+        settingNavigtionView();
         settingClickListner();
-      //  loadJSON();
+
 
     }
 
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void settingClickListner() {
         mHamBurgerIconIV.setOnClickListener(this);
         mHeaderCv.setOnClickListener(this);
-        click.setOnClickListener(this);
+
     }
 
 
@@ -114,9 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
-            case R.id.click:
-                mITableDetailPresenter.tableDetailsApiCall(90);
-                break;
         }
     }
 
@@ -130,19 +129,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
 
         mITableDetailPresenter = new TableDetailPresenterImpl(MainActivity.this);
+        mITableDetailPresenter.tableDetailsApiCall(Integer.parseInt(mPref.getUserId()));
     }
 
     @Override
-    public void onTableDetailsSuccess(int pid, TableDetailModel tableDetailModel) {
+    public void onTableDetailsSuccess(int pid, TableDetailModel[] tableDetailModel) {
 
+
+        Log.d("MainActivity", "table size" + tableDetailModel.length);
+
+        data = Arrays.asList(tableDetailModel);
         Utils.stopProgress(MainActivity.this);
         if (tableDetailModel != null) {
+
             int numberOfColumns = 2;
             captionRV.setHasFixedSize(true);
             captionRV.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-            captionRecyclerViewAdaptor = new CaptionRecyclerViewAdaptor(this, data);
+            captionRecyclerViewAdaptor = new CaptionRecyclerViewAdaptor(this,data);
             captionRV.setAdapter(captionRecyclerViewAdaptor);
-
 
         }
 
@@ -152,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onTableDetailsError(int pid, TableDetailModel tableDetailErrorModel) {
+    public void onTableDetailsError(int pid, TableDetailModel[] tableDetailErrorModel) {
 
     }
 }

@@ -9,7 +9,7 @@ import com.bitplay.restpos.models.tabledetails.TableDetailModel;
 public interface ITableDetailView {
 
 
-    void onTableDetailsSuccess(int pid, TableDetailModel tableDetailModel);
+    void onTableDetailsSuccess(int pid, TableDetailModel[] tableDetailModel);
 
-    void onTableDetailsError(int pid, TableDetailModel tableDetailErrorModel);
+    void onTableDetailsError(int pid, TableDetailModel[] tableDetailErrorModel);
 }

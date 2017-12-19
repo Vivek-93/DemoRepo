@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
     private ITableDetailView mITableDetailView;
     private MainActivity mMainActivity;
     private AsyncInteractor mAsyncInteractor;
-    private TableDetailModel mTableDetailModel;
+    private TableDetailModel[] mTableDetailModel;
 
     public TableDetailPresenterImpl(ITableDetailView mITableDetailView) {
         this.mITableDetailView = mITableDetailView;
@@ -68,9 +69,10 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
             try {
                 if (responseJson != null) {
                     Gson gson = new Gson();
-                    Log.d("TablePresenterImpl", "mes3" + AppConstants.TAG_ID_TABLE_DETAILS);
-                 //   JSONArray jsonArray = gson.fromJson(responseJson, TableDetailModel.class);
-                    mTableDetailModel = gson.fromJson(responseJson, TableDetailModel.class);
+
+                    mTableDetailModel = gson.fromJson(responseJson, TableDetailModel[].class);
+
+             //       Wrapper[] data = gson.fromJson(jElement, Wrapper[].class);
                     Log.d("TablePresenterImpl", "mes4" + AppConstants.TAG_ID_TABLE_DETAILS);
                     mITableDetailView.onTableDetailsSuccess(pid, mTableDetailModel);
                 } else {
@@ -90,7 +92,7 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
 
         if (pid == AppConstants.TAG_ID_TABLE_DETAILS) {
             Gson gson = new Gson();
-            mTableDetailModel = gson.fromJson(error, TableDetailModel.class);
+            mTableDetailModel = gson.fromJson(error, TableDetailModel[].class);
             mITableDetailView.onTableDetailsError(pid, mTableDetailModel);
         }
 
