@@ -5,7 +5,9 @@ import android.util.Log;
 import com.bitplay.restpos.async.AsyncInteractor;
 import com.bitplay.restpos.async.OnRequestListener;
 import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
+import com.bitplay.restpos.models.subcategory.SubcategoryModel;
 import com.bitplay.restpos.utils.AppConstants;
+import com.bitplay.restpos.utils.NetworkStatus;
 import com.bitplay.restpos.utils.Utils;
 import com.bitplay.restpos.views.fragments.caption.CaptionCatogeryFragment;
 import com.google.gson.Gson;
@@ -14,17 +16,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Vivek on 19-12-2017.
  */
 
-public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter,OnRequestListener{
+public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequestListener {
 
     private final AsyncInteractor mAsyncInteractor;
     private final IMenuCategoryView mIMenuCategoryView;
     private final CaptionCatogeryFragment mCaptionCatogeryFragment;
 
     private MenuCategoryModel[] mMenuCategoryModel;
+    private SubcategoryModel[] mSubcategoryModel;
 
     public MenuCategoryPresenterImpl(IMenuCategoryView mIMenuCategoryView) {
         this.mIMenuCategoryView = mIMenuCategoryView;
@@ -44,6 +50,23 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter,OnReque
     }
 
     @Override
+    public void getSubCategoryItems(String category) {
+        try {
+
+            Utils.showProgress(mCaptionCatogeryFragment.getActivity());
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("category", category);
+            Log.d("params", "" + params.toString());
+            mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_SUB_CATEGORY,
+                    AppConstants.URL.SUBCATEGORY.getUrl(), params);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
     public void onRequestCompletion(int pid, JSONObject responseJson, JSONArray responseArray) {
 
     }
@@ -53,15 +76,16 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter,OnReque
 
         if (responseJson != null) {
 
-            Log.d("MenuPresenter","comming1");
-                if (pid == AppConstants.TAG_ID_MENU_CATEGORY) {
-                    Gson gson = new Gson();
-                    Log.d("MenuPresenter","comming2");
-                    mMenuCategoryModel = gson.fromJson(responseJson, MenuCategoryModel[].class);
-                    Log.d("MenuPresenter","comming3");
-                    mIMenuCategoryView.getMenuCategoryApiSuccess(pid, mMenuCategoryModel);
-                }
+            if (pid == AppConstants.TAG_ID_MENU_CATEGORY) {
+                Gson gson = new Gson();
+                mMenuCategoryModel = gson.fromJson(responseJson, MenuCategoryModel[].class);
+                mIMenuCategoryView.getMenuCategoryApiSuccess(pid, mMenuCategoryModel);
+            } else if (pid == AppConstants.TAG_ID_SUB_CATEGORY) {
+                Gson gson = new Gson();
+                mSubcategoryModel = gson.fromJson(responseJson, SubcategoryModel[].class);
+                mIMenuCategoryView.onGetSubCategoryItemsSuccess(pid, mSubcategoryModel);
 
+            }
         }
 
     }

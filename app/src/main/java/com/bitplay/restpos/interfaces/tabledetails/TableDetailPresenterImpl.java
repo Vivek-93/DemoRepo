@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.bitplay.restpos.async.AsyncInteractor;
 import com.bitplay.restpos.async.OnRequestListener;
+import com.bitplay.restpos.models.guestdetails.GuestDetailModel;
 import com.bitplay.restpos.models.register.RegisterModel;
 import com.bitplay.restpos.models.tabledetails.TableDetailModel;
 import com.bitplay.restpos.utils.AppConstants;
@@ -31,6 +32,7 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
     private MainActivity mMainActivity;
     private AsyncInteractor mAsyncInteractor;
     private TableDetailModel[] mTableDetailModel;
+    private String mGuestDetailModel;
 
     public TableDetailPresenterImpl(ITableDetailView mITableDetailView) {
         this.mITableDetailView = mITableDetailView;
@@ -42,7 +44,6 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
     @Override
     public void tableDetailsApiCall(int id) {
 
-
         if (NetworkStatus.checkNetworkStatus(mMainActivity)) {
             Utils.showProgress(mMainActivity);
             Map<String, String> params = new HashMap<String, String>();
@@ -50,6 +51,25 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
             Log.d("params", "" + params.toString());
             mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_TABLE_DETAILS,
                     AppConstants.URL.TABLEDETAILS.getUrl(), params);
+        } else {
+            Utils.showToast(mMainActivity, "Please connect to internet");
+        }
+
+    }
+
+    @Override
+    public void guestDetailsApiCall(int tablenumber, int headcount, String guestname, int phonenumber) {
+
+        if (NetworkStatus.checkNetworkStatus(mMainActivity)) {
+            Utils.showProgress(mMainActivity);
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("tablenumber", String.valueOf(tablenumber));
+            params.put("headcount", String.valueOf(headcount));
+            params.put("guestname", guestname);
+            params.put("phonenumber", String.valueOf(phonenumber));
+            Log.d("params", "" + params.toString());
+            mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_GUEST_DETAILS,
+                    AppConstants.URL.GUESTDETAILS.getUrl(), params);
         } else {
             Utils.showToast(mMainActivity, "Please connect to internet");
         }
@@ -75,6 +95,22 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
              //       Wrapper[] data = gson.fromJson(jElement, Wrapper[].class);
                     Log.d("TablePresenterImpl", "mes4" + AppConstants.TAG_ID_TABLE_DETAILS);
                     mITableDetailView.onTableDetailsSuccess(pid, mTableDetailModel);
+                } else {
+
+                    //  mIRegisterView.onLoginError(pid, mRegisterModel.getMeta().getStatus());
+
+                }
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+            }
+        } else if(pid== AppConstants.TAG_ID_GUEST_DETAILS){
+
+            try {
+                if (responseJson != null) {
+                    Gson gson = new Gson();
+                    mGuestDetailModel = gson.toJson(responseJson);
+                    //       Wrapper[] data = gson.fromJson(jElement, Wrapper[].class);
+                    mITableDetailView.onGuestDetailsSuccess(pid, mGuestDetailModel);
                 } else {
 
                     //  mIRegisterView.onLoginError(pid, mRegisterModel.getMeta().getStatus());

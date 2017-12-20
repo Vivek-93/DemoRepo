@@ -43,6 +43,7 @@ public class Sharedpreferences {
 
     public static final String TAG_USER_NAME = "username";
     public static final String TAG_USER_ROLE= "userrole";
+    public static final String TAG_TABLE_ID= "tableid";
 
     public static final String TAG_USER_COMING_FROM = "comingfrom";
 
@@ -150,6 +151,8 @@ public class Sharedpreferences {
         } catch (Exception e) {
         }
     }
+
+
     public String getUserId() {
         return pref.getString(TAG_USER_ID, "");
     }
@@ -157,6 +160,17 @@ public class Sharedpreferences {
     public void setUserId(String userid) {
         try {
             editor.putString(TAG_USER_ID, userid);
+            editor.commit();
+        } catch (Exception e) {
+        }
+    }
+    public String getTableId() {
+        return pref.getString(TAG_TABLE_ID, "");
+    }
+
+    public void setTableId(String tableid) {
+        try {
+            editor.putString(TAG_TABLE_ID, tableid);
             editor.commit();
         } catch (Exception e) {
         }

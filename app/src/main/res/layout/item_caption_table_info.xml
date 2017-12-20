@@ -93,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
+                android:visibility="gone"
                 android:imeOptions="actionDone"
                 android:hint="Enter table number"/>
 

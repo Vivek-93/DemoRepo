@@ -12,8 +12,11 @@ public class AppConstants {
     public static int TAG_ID_REGISTER= 102;
     public static int TAG_ID_PROFILE_DETAILS= 103;
     public static int TAG_ID_PROFILE_UPDATE= 104;
-    public static int TAG_ID_TABLE_DETAILS=106;
+    public static int TAG_ID_TABLE_DETAILS=105;
     public static int TAG_ID_MENU_CATEGORY=106;
+    public static int TAG_ID_GUEST_DETAILS=107;
+    public static int TAG_ID_GET_GUEST_DETAILS=108;
+    public static int TAG_ID_SUB_CATEGORY=109;
 
 
     public static String baseUrlInsideApp = "http://192.168.1.106:8082/api";
@@ -57,7 +60,10 @@ public class AppConstants {
         PROFILEDETAILS("/Values/UserDetail"),
         PROFILEUPDATE("/Values/Update"),
         TABLEDETAILS("/Restaurant/tableDetail"),
-        MENUCATEGORY("/RestaurantMenu/Get");
+        MENUCATEGORY("/RestaurantMenu/Get"),
+        GUESTDETAILS("/Restaurant/RestaurantAdd"),
+        GETGUESTDETAIL("/Restaurant/GuestDetail"),
+        SUBCATEGORY("/RestaurantMenu/SubCategory");
 
 
 

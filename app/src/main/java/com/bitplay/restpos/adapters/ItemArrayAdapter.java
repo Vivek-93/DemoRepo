@@ -66,7 +66,9 @@ public class ItemArrayAdapter extends RecyclerView.Adapter<ItemArrayAdapter.View
     public void onBindViewHolder(final ItemArrayAdapter.ViewHolder holder, final int position) {
 
 
-        holder.item_Name.setText(data.get(position).getCategory().toString());
+
+
+
         holder.item_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +88,7 @@ public class ItemArrayAdapter extends RecyclerView.Adapter<ItemArrayAdapter.View
             holder.item_card.setBackgroundColor(Color.parseColor("#ffffff"));
             holder.item_Name.setTextColor(mContext.getResources().getColor(R.color.colorBlack));
         }
+        holder.item_Name.setText(data.get(position).getCategory().toString());
 
     }
 

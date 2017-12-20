@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.extra.BookedItems;
 import com.bitplay.restpos.extra.MealDetails;
+import com.bitplay.restpos.models.subcategory.SubcategoryModel;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class SubSubItemAdapter extends RecyclerView.Adapter<SubSubItemAdapter.ViewHolder> {
 
-    private List<String> subData;
+    private List<SubcategoryModel> subData;
     private Context mContext;
     private final int position;
     private String mCatogery;
@@ -41,7 +42,7 @@ public class SubSubItemAdapter extends RecyclerView.Adapter<SubSubItemAdapter.Vi
     }
 
 
-    public SubSubItemAdapter(Context context, int pos, List<String> subData, SubCatogeryonClick mClick) {
+    public SubSubItemAdapter(Context context, int pos, List<SubcategoryModel> subData, SubCatogeryonClick mClick) {
         this.mContext = context;
         this.position = pos;
         this.subData = subData;
@@ -64,7 +65,7 @@ public class SubSubItemAdapter extends RecyclerView.Adapter<SubSubItemAdapter.Vi
             @Override
             public void onClick(View view) {
 
-                mClick.onClicked(subData.get(position), position);
+                mClick.onClicked(subData.get(position).getSubcategory(), position);
                 row_index=position;
                 notifyDataSetChanged();
 
@@ -80,7 +81,7 @@ public class SubSubItemAdapter extends RecyclerView.Adapter<SubSubItemAdapter.Vi
             holder.mItemName .setTextColor(mContext.getResources().getColor(R.color.colorBlack));
         }
 
-        holder.mItemName.setText(subData.get(position).toString());
+        holder.mItemName.setText(subData.get(position).getSubcategory().toString());
 
     }
 

@@ -20,12 +20,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bitplay.restpos.adapters.ItemArrayAdapter1;
 import com.bitplay.restpos.adapters.SubItemArrayAdapter;
 import com.bitplay.restpos.extra.BookedItems;
 import com.bitplay.restpos.extra.MealDetails;
 import com.bitplay.restpos.R;
+import com.bitplay.restpos.interfaces.gettableguestdetail.GetGuestDetailPresenterImpl;
+import com.bitplay.restpos.interfaces.gettableguestdetail.IGetGuestDetailPresenter;
+import com.bitplay.restpos.interfaces.gettableguestdetail.IGetGuestDetailView;
+import com.bitplay.restpos.models.getguestdetail.GetGuestDetailModel;
+import com.bitplay.restpos.utils.Sharedpreferences;
+import com.bitplay.restpos.utils.Utils;
 import com.bitplay.restpos.views.fragments.caption.CaptionCatogeryFragment;
 import com.bitplay.restpos.views.fragments.caption.CaptionSearchFragment;
 
@@ -36,7 +43,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-public class TableDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class TableDetailsActivity extends AppCompatActivity implements View.OnClickListener,IGetGuestDetailView {
 
     private SubItemArrayAdapter mSubItemArrayAdapter;
 
@@ -52,16 +59,15 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
 
     ArrayList<BookedItems> list = new ArrayList<BookedItems>();
     private String guestName, guestPhone, guestTable;
-
+    private IGetGuestDetailPresenter mIGetGuestDetailPresenter;
+    public Sharedpreferences mPref = Sharedpreferences.getUserDataObj(TableDetailsActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        guestName = getIntent().getStringExtra("guestName");
-        guestPhone = getIntent().getStringExtra("guestPhone");
-        guestTable = getIntent().getStringExtra("guestTable");
+
         mCetogery = (Button) findViewById(R.id.act_table_details_catogery_btn);
         mSearch = (Button) findViewById(R.id.act_table_details_search_btn);
         mFramelayout = (FrameLayout) findViewById(R.id.act_table_details_framelayout);
@@ -82,9 +88,6 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
     private void initializeViews() {
 
         //readFileDataMethod();
-        mGuestName.setText("" + guestName);
-        mGuestPhone.setText("" + guestPhone);
-        mGuestTable.setText("" + guestTable);
 
         mFragmentManager = getSupportFragmentManager();
         openCatogeryFragment();
@@ -94,12 +97,15 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
         mCetogery.setOnClickListener(this);
         mBackIv.setOnClickListener(this);
 
+
+
+
     }
 
 
     ArrayList<MealDetails> mealdetails = new ArrayList<>();
 
-    private void readFileDataMethod() {
+  /*  private void readFileDataMethod() {
         InputStream inputStream = getResources().openRawResource(R.raw.restaurant_menu_v);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
 
@@ -125,7 +131,7 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     @Override
@@ -181,9 +187,34 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
         super.onBackPressed();
     }
 
+
     @Override
-    public void onResume() {
+    public void onGetGuestDetailSuccess(int pid, GetGuestDetailModel getGuestDetailModel) {
+
+        Utils.stopProgress(TableDetailsActivity.this);
+        if (getGuestDetailModel!=null) {
+
+            mGuestName.setText("" + getGuestDetailModel.getGuestname());
+            mGuestPhone.setText("" + getGuestDetailModel.getPhonenumber());
+            mGuestTable.setText("Table" + getGuestDetailModel.getTablenumber());
+
+        }
+    }
+
+    @Override
+    public void onGetGuestDetailError(int pid, String getGuestDetailError) {
+
+        Utils.stopProgress(TableDetailsActivity.this);
+        Toast.makeText(this, "Some error", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onResume() {
         super.onResume();
 
+        mIGetGuestDetailPresenter = new GetGuestDetailPresenterImpl(TableDetailsActivity.this);
+        mIGetGuestDetailPresenter.getGuestDetailApiCall(Integer.parseInt(mPref.getTableId()));
+        Log.d("TableDetailActivity","comming"+mPref.getTableId());
     }
 }

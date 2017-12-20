@@ -36,6 +36,19 @@
                     android:tint="@color/colorPrimary"
                     android:scaleType="centerInside"
                     android:src="@drawable/hamburger" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"/>
+
+                <ImageView
+                    android:id="@+id/mainActToolbarProfileIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".12"
+                    android:scaleType="fitCenter"
+                    android:padding="5dp"
+                    android:src="@drawable/userprofile"/>
 
 
             </LinearLayout>

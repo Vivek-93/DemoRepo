@@ -7,4 +7,6 @@ package com.bitplay.restpos.interfaces.tabledetails;
 public interface ITableDetailPresenter {
 
     void tableDetailsApiCall(int id);
+
+    void guestDetailsApiCall( int tablenumber, int headcount,String guestname,int phonenumber);
 }

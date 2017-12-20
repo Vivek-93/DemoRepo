@@ -25,6 +25,7 @@ import com.bitplay.restpos.extra.MealDetails;
 import com.bitplay.restpos.interfaces.menucategory.IMenuCategoryView;
 import com.bitplay.restpos.interfaces.menucategory.MenuCategoryPresenterImpl;
 import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
+import com.bitplay.restpos.models.subcategory.SubcategoryModel;
 import com.bitplay.restpos.models.tabledetails.TableDetailModel;
 import com.bitplay.restpos.utils.Utils;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
@@ -44,20 +45,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     private ArrayList<MealDetails> mList = new ArrayList<>();
     private List<MenuCategoryModel> catogeryList = new ArrayList<>();
 
-    private List<String> subCatogeryList = new ArrayList<String>();
-
-    {
-        subCatogeryList.add("Beverages");
-        subCatogeryList.add("Burger");
-        subCatogeryList.add("Chinese Main Course");
-        subCatogeryList.add("Chinese Starter");
-        subCatogeryList.add("Chinese Soups");
-        subCatogeryList.add("Main Course Lamb");
-        subCatogeryList.add("Kitchen Beverages");
-        subCatogeryList.add("Frecnch Roll Sandwich");
-        subCatogeryList.add("Main Course Chicken");
-
-    }
+    private List<SubcategoryModel> subCatogeryList = new ArrayList<SubcategoryModel>();
 
     private int pos;
     private int position;
@@ -80,7 +68,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
         mCatogeryRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_caption_catogery_rv);
         mSubSubCatogeryRv = (RecyclerView) view.findViewById(R.id.fragment_caption_sub_sub_catogery_rv);
         mSubCatogeryRv = (RecyclerView) view.findViewById(R.id.fragment_caption_sub_catogery_rv);
-        //    mList = (ArrayList<MealDetails>) getArguments().getSerializable("itemlistCatogery");
+
         initializeView();
         return view;
     }
@@ -89,7 +77,6 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
-
         mTableDetailsActivity = (TableDetailsActivity) getActivity();
         mFragmentManager = mTableDetailsActivity.getSupportFragmentManager();
         mMenuCategoryPresenter = new MenuCategoryPresenterImpl(this);
@@ -99,7 +86,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     private void initializeView() {
 
         mCatogeryRecyclerView.setHasFixedSize(true);
-
+        settingUpRecyclerView();
 
     }
 
@@ -107,22 +94,8 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
         mItemArrayAdapter = new ItemArrayAdapter(getContext(), pos, catogeryList, new ItemArrayAdapter.CatogeryonClick() {
             @Override
             public void onClicked(MenuCategoryModel catogery, int pos) {
-                Log.d("CaptionCatogery", "" + pos);
-
-                mSubSubItemAdapter = new SubSubItemAdapter(getContext(), position, subCatogeryList, new SubSubItemAdapter.SubCatogeryonClick() {
-                    @Override
-                    public void onClicked(String data, int pos) {
-
-                        Log.d("CaptionFragment", "" + data);
-                        mSubSubCatogeryRv.setHasFixedSize(true);
-                        mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList, data);
-                        mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
-                        mSubSubCatogeryRv.setAdapter(mSubItemArrayAdapter);
-                    }
-                });
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-                mSubCatogeryRv.setLayoutManager(mLayoutManager);
-                mSubCatogeryRv.setAdapter(mSubSubItemAdapter);
+                mMenuCategoryPresenter.getSubCategoryItems(catogery.getCategory());
+               // settingUpCategoryRecyclerView(catogery, pos);
 
             }
         });
@@ -143,7 +116,6 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
         Utils.stopProgress(context);
         catogeryList = Arrays.asList(menuCategoryModel);
         if (menuCategoryModel != null) {
-            Log.d("CCF", "" + "hi");
             settingUpRecyclerView();
         } else {
             Toast.makeText(context, "Try again", Toast.LENGTH_SHORT).show();
@@ -153,6 +125,35 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
 
     @Override
     public void getMenuCategoryApiError(int pid, String errorData) {
+
+
+    }
+
+    @Override
+    public void onGetSubCategoryItemsSuccess(int pid, SubcategoryModel[] subcategoryModels) {
+
+        Utils.stopProgress(context);
+        Log.d("CCF", "list size" + subcategoryModels.length);
+        subCatogeryList = Arrays.asList(subcategoryModels);
+        mSubSubItemAdapter = new SubSubItemAdapter(getContext(), pos, subCatogeryList, new SubSubItemAdapter.SubCatogeryonClick() {
+            @Override
+            public void onClicked(String data, int pos) {
+
+                Log.d("CaptionFragment", "" + data);
+                mSubSubCatogeryRv.setHasFixedSize(true);
+                mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList, data);
+                mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                mSubSubCatogeryRv.setAdapter(mSubItemArrayAdapter);
+            }
+        });
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mSubCatogeryRv.setLayoutManager(mLayoutManager);
+        mSubCatogeryRv.setAdapter(mSubSubItemAdapter);
+
+    }
+
+    @Override
+    public void onGetSubCategoryItemsError(int pid, String error) {
 
     }
 }

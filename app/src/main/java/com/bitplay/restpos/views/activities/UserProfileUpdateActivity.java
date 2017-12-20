@@ -25,8 +25,9 @@ import com.bitplay.restpos.utils.Utils;
 
 public class UserProfileUpdateActivity extends AppCompatActivity implements View.OnClickListener, IProfileUpdateView {
 
-    public EditText mUpdateName, mUpdateNumber, mUpdateEmail, mUpdateRole, mUpdateAdd, mUpdateFather, mUpdateAadhar, mUpdatePan;
+    public EditText mUpdateName, mUpdateNumber, mUpdateEmail, mUpdateAdd, mUpdateFather, mUpdateAadhar, mUpdatePan;
     public Button mUpdateDone;
+    public TextView mUpdateRole;
 
     private IProfileUpdatePresenter mIProfileUpdatePresenter;
     public String updateName, updateEmail, updateRole, updateAdd, updateFather, updatePan;
@@ -43,7 +44,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         mUpdateName = (EditText) findViewById(R.id.act_user_profile_update_name_et);
         mUpdateNumber = (EditText) findViewById(R.id.act_user_profile_update_mobileno_et);
         mUpdateEmail = (EditText) findViewById(R.id.act_user_profile_update_email_et);
-        mUpdateRole = (EditText) findViewById(R.id.act_user_profile_update_role_et);
+        mUpdateRole = (TextView) findViewById(R.id.act_user_profile_update_role_et);
         mUpdateAdd = (EditText) findViewById(R.id.act_user_profile_update_address_tv);
         mUpdateFather = (EditText) findViewById(R.id.act_user_profile_update_father_et);
         mUpdateAadhar = (EditText) findViewById(R.id.act_user_profile_update_aadhar_et);

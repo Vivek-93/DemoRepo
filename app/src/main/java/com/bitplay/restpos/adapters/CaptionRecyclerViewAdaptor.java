@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bitplay.restpos.interfaces.tabledetails.ITableDetailPresenter;
 import com.bitplay.restpos.models.tabledetails.TableDetailModel;
 import com.bitplay.restpos.views.activities.BillPdfViewActivity;
 import com.bitplay.restpos.views.activities.MainActivity;
@@ -43,11 +45,18 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
     private Button proceedBtn;
     int counter = 0;
     private EditText guestName,guestPhone,guestTable;
+    private final ProceedButtonClick mClick;
+
+    public interface ProceedButtonClick {
+
+        void onClicked(String tableid,String tableno, String headcount, String guestname, String phoneno);
+    }
 
 
-    public CaptionRecyclerViewAdaptor(Context context, List<TableDetailModel> data) {
+    public CaptionRecyclerViewAdaptor(Context context, List<TableDetailModel> data,ProceedButtonClick mClick) {
         this.mContext = context;
         this.data = data;
+        this.mClick = mClick;
 
     }
 
@@ -62,12 +71,11 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
     @Override
     public void onBindViewHolder(final CaptionRecyclerViewAdaptor.ViewHolder holder, final int position) {
 
-        holder.myTextView.setText(data.get(position).getTablenumber().toString());
+        holder.myTextView.setText("Table "+data.get(position).getTablenumber().toString());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
 
                     tableInfoDialogBox = new Dialog(mContext);
                     //  tableInfoDialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -123,11 +131,18 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
                     proceedBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(mContext, TableDetailsActivity.class);
-                            intent.putExtra("guestName", guestName.getText().toString());
-                            intent.putExtra("guestPhone", guestPhone.getText().toString());
-                            intent.putExtra("guestTable", guestTable.getText().toString());
-                            mContext.startActivity(intent);
+
+                          /*  if(guestName.getText()==null){
+                                Toast.makeText(mContext, "Enter guest name", Toast.LENGTH_SHORT).show();
+                            }else if(guestPhone.getText()==null){
+                                Toast.makeText(mContext, "Enter guest phone number", Toast.LENGTH_SHORT).show();
+                            }
+                          else   if(!guestName.getText().equals(null) && !guestPhone.getText().equals(null)) {*/
+
+                                mClick.onClicked(data.get(position).getId().toString(), data.get(position).getTablenumber().toString(), counts.getText().toString(), guestName.getText().toString(),
+                                        guestPhone.getText().toString());
+                                notifyDataSetChanged();
+
                             tableInfoDialogBox.dismiss();
                         }
                     });

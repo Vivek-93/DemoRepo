@@ -1,10 +1,9 @@
-package com.bitplay.restpos.models.menucategory;
+package com.bitplay.restpos.models.subcategory;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class MenuCategoryModel {
+public class SubcategoryModel {
 
     @SerializedName("id")
     @Expose
@@ -20,7 +19,7 @@ public class MenuCategoryModel {
     private Object onlinedisplayname;
     @SerializedName("subcategory")
     @Expose
-    private Object subcategory;
+    private String subcategory;
     @SerializedName("price")
     @Expose
     private Object price;
@@ -38,7 +37,7 @@ public class MenuCategoryModel {
     private Object available;
     @SerializedName("category")
     @Expose
-    private String category;
+    private Object category;
     @SerializedName("mealtype")
     @Expose
     private Object mealtype;
@@ -75,11 +74,11 @@ public class MenuCategoryModel {
         this.onlinedisplayname = onlinedisplayname;
     }
 
-    public Object getSubcategory() {
+    public String getSubcategory() {
         return subcategory;
     }
 
-    public void setSubcategory(Object subcategory) {
+    public void setSubcategory(String subcategory) {
         this.subcategory = subcategory;
     }
 
@@ -123,11 +122,11 @@ public class MenuCategoryModel {
         this.available = available;
     }
 
-    public String getCategory() {
+    public Object getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Object category) {
         this.category = category;
     }
 

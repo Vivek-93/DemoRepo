@@ -16,12 +16,13 @@
 
 
         <TextView
+            android:id="@+id/act_main_userrole_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:text="User"
+            android:text=""
             android:textColor="@color/colorPrimary" />
 
 
@@ -37,14 +38,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/act_main_userrole_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text=""
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/colorPrimary" />
+
 
 
 

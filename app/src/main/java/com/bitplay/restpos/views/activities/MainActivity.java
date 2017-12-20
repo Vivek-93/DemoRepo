@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.adapters.CaptionRecyclerViewAdaptor;
@@ -22,6 +23,7 @@ import com.bitplay.restpos.database.DatabaseHelper;
 import com.bitplay.restpos.interfaces.tabledetails.ITableDetailPresenter;
 import com.bitplay.restpos.interfaces.tabledetails.ITableDetailView;
 import com.bitplay.restpos.interfaces.tabledetails.TableDetailPresenterImpl;
+import com.bitplay.restpos.models.guestdetails.GuestDetailModel;
 import com.bitplay.restpos.models.login.LoginModel;
 import com.bitplay.restpos.models.tabledetails.TableDetailModel;
 import com.bitplay.restpos.utils.Sharedpreferences;
@@ -41,7 +43,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ITableDetailView {
 
     private DrawerLayout hrHomeActDrawerLayout;
-    public ImageView mHamBurgerIconIV;
+    public ImageView mHamBurgerIconIV , mProfileIv;
     public NavigationView mLeftNavView;
     public RecyclerView captionRV;
     public TextView mUserName, mUserRole, mLogout;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home_main);
         captionRV = (RecyclerView) findViewById(R.id.act_home_caption_rv);
         mHamBurgerIconIV = (ImageView) findViewById(R.id.mainActHamBurgerIconIV);
+        mProfileIv=(ImageView)findViewById(R.id.mainActToolbarProfileIv);
 
         initilizeView();
     }
@@ -98,7 +101,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void settingClickListner() {
         mHamBurgerIconIV.setOnClickListener(this);
-        mHeaderCv.setOnClickListener(this);
+      //  mHeaderCv.setOnClickListener(this);
+        mProfileIv.setOnClickListener(this);
 
     }
 
@@ -110,12 +114,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hrHomeActDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
 
-            case R.id.drawer_header_cv:
+            case R.id.mainActToolbarProfileIv:
                 Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
                 hrHomeActDrawerLayout.closeDrawer(Gravity.LEFT);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
+                break;
         }
     }
 
@@ -135,9 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onTableDetailsSuccess(int pid, TableDetailModel[] tableDetailModel) {
 
-
         Log.d("MainActivity", "table size" + tableDetailModel.length);
-
         data = Arrays.asList(tableDetailModel);
         Utils.stopProgress(MainActivity.this);
         if (tableDetailModel != null) {
@@ -145,18 +147,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int numberOfColumns = 2;
             captionRV.setHasFixedSize(true);
             captionRV.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-            captionRecyclerViewAdaptor = new CaptionRecyclerViewAdaptor(this,data);
+            captionRecyclerViewAdaptor = new CaptionRecyclerViewAdaptor(this, data, new CaptionRecyclerViewAdaptor.ProceedButtonClick() {
+                @Override
+                public void onClicked(String tableid, String tableno, String headcount, String guestname, String phoneno) {
+
+                    mITableDetailPresenter.guestDetailsApiCall(Integer.valueOf(tableno), Integer.valueOf(headcount), guestname,
+                            Integer.valueOf(phoneno));
+
+                    mPref.setTableId(tableid);
+
+                }
+            });
             captionRV.setAdapter(captionRecyclerViewAdaptor);
 
         }
-
-        Log.d("MainActivity", "list size" + data.size());
-
 
     }
 
     @Override
     public void onTableDetailsError(int pid, TableDetailModel[] tableDetailErrorModel) {
+
+    }
+
+    @Override
+    public void onGuestDetailsSuccess(int pid, String guestDetailModel) {
+
+        Utils.stopProgress(MainActivity.this);
+        if (guestDetailModel != null) {
+            Intent intent = new Intent(MainActivity.this, TableDetailsActivity.class);
+            startActivity(intent);
+        }
+
+
+    }
+
+    @Override
+    public void onGuestDetailsError(int pid, String guestDetailerror) {
 
     }
 }

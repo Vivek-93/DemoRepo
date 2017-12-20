@@ -370,6 +370,153 @@ public class AsyncInteractor implements IAsyncInteractor {
             };
             // Adding request to volley request queue
             AppController.getInstance().addToRequestQueue(stringRequest);
+        } else if (pid == AppConstants.TAG_ID_GUEST_DETAILS) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d(TAG, "api call" + response.toString());
+                            System.out.println(response);
+                            try {
+                                listener.onRequestCompletion(pid, response);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("hello", ":" + error.toString());
+                            VolleyLog.e("Error: ", error.getMessage());
+
+                            String body;
+                            //get response body and parse with appropriate encoding
+                            if (error.networkResponse.data != null) {
+                                try {
+                                    body = new String(error.networkResponse.data, "UTF-8");
+                                    Log.d("TAG_ID_GUEST_DETAILS", "error --" + body);
+                                    listener.onRequestCompletionError(pid, body);
+
+                                } catch (UnsupportedEncodingException e) {
+                                    error.printStackTrace();
+                                }
+                            }
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return stringMap;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> header = new HashMap<String, String>();
+                    //  header.put("Content-Type", "application/json; charset=UTF-8");
+                    return header;
+                }
+            };
+            // Adding request to volley request queue
+            AppController.getInstance().addToRequestQueue(stringRequest);
+        } else if (pid == AppConstants.TAG_ID_GET_GUEST_DETAILS) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d(TAG, "api call" + response.toString());
+                            System.out.println(response);
+                            try {
+                                listener.onRequestCompletion(pid, response);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("hello", ":" + error.toString());
+                            VolleyLog.e("Error: ", error.getMessage());
+
+                            String body;
+                            //get response body and parse with appropriate encoding
+                            if (error.networkResponse.data != null) {
+                                try {
+                                    body = new String(error.networkResponse.data, "UTF-8");
+                                    Log.d("TAG_ID_GET_GUEST_DETAILS", "error --" + body);
+                                    listener.onRequestCompletionError(pid, body);
+
+                                } catch (UnsupportedEncodingException e) {
+                                    error.printStackTrace();
+                                }
+                            }
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return stringMap;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> header = new HashMap<String, String>();
+                    //  header.put("Content-Type", "application/json; charset=UTF-8");
+                    return header;
+                }
+            };
+            // Adding request to volley request queue
+            AppController.getInstance().addToRequestQueue(stringRequest);
+        }else if (pid == AppConstants.TAG_ID_SUB_CATEGORY) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d(TAG, "api call" + response.toString());
+                            System.out.println(response);
+                            try {
+                                listener.onRequestCompletion(pid, response);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("hello", ":" + error.toString());
+                            VolleyLog.e("Error: ", error.getMessage());
+
+                            String body;
+                            //get response body and parse with appropriate encoding
+                            if (error.networkResponse.data != null) {
+                                try {
+                                    body = new String(error.networkResponse.data, "UTF-8");
+                                    Log.d("TAG_ID_SUB_CATEGORY", "error --" + body);
+                                    listener.onRequestCompletionError(pid, body);
+
+                                } catch (UnsupportedEncodingException e) {
+                                    error.printStackTrace();
+                                }
+                            }
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return stringMap;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> header = new HashMap<String, String>();
+                    //  header.put("Content-Type", "application/json; charset=UTF-8");
+                    return header;
+                }
+            };
+            // Adding request to volley request queue
+            AppController.getInstance().addToRequestQueue(stringRequest);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.bitplay.restpos.interfaces.menucategory;
 
 import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
+import com.bitplay.restpos.models.subcategory.SubcategoryModel;
 
 /**
  * Created by Vivek on 19-12-2017.
@@ -9,6 +10,9 @@ import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
 public interface IMenuCategoryView {
 
    void getMenuCategoryApiSuccess(int pid, MenuCategoryModel[] menuCategoryModel);
-
    void getMenuCategoryApiError(int pid, String errorData);
+
+   void onGetSubCategoryItemsSuccess(int pid, SubcategoryModel[] subcategoryModels);
+   void onGetSubCategoryItemsError(int pid,String error);
+
 }
