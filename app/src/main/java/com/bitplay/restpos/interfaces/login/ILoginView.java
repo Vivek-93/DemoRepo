@@ -10,7 +10,7 @@ public interface ILoginView {
 
     void onLoginSuccess(int pid, LoginModel loginModel);
 
-    void onLoginError(int pid, LoginModel loginErrorModel);
+    void onLoginError(int pid, String loginErrorModel);
 
 
 }

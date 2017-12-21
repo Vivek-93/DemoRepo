@@ -2,11 +2,7 @@ package com.bitplay.restpos.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,7 +15,6 @@ import com.bitplay.restpos.R;
 import com.bitplay.restpos.interfaces.profileupdate.IProfileUpdatePresenter;
 import com.bitplay.restpos.interfaces.profileupdate.IProfileUpdateView;
 import com.bitplay.restpos.interfaces.profileupdate.ProfileUpdatePresenterImpl;
-import com.bitplay.restpos.models.profileupdate.ProfileUpdateModel;
 import com.bitplay.restpos.utils.Sharedpreferences;
 import com.bitplay.restpos.utils.Utils;
 
@@ -61,7 +56,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     private void initializeViews() {
         mBack.setOnClickListener(this);
         gettingPreviousDetails();
-        //  gettingDetails();
+
 
     }
 
@@ -119,16 +114,17 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     }
 
     @Override
-    public void onProfileUpdateSuccess(int pid, ProfileUpdateModel profileUpdateModel) {
+    public void onProfileUpdateSuccess(int pid, String profileUpdateModel) {
         Utils.stopProgress(UserProfileUpdateActivity.this);
         Intent intent = new Intent(UserProfileUpdateActivity.this, UserProfileActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+      //  Toast.makeText(this, "" + profileUpdateModel.replaceAll("\"", ""), Toast.LENGTH_SHORT).show();
+         startActivity(intent);
 
     }
 
     @Override
-    public void onProfileUpdateError(int pid, ProfileUpdateModel profileUpdateErrorModel) {
+    public void onProfileUpdateError(int pid, String profileUpdateErrorModel) {
 
         Utils.stopProgress(UserProfileUpdateActivity.this);
         Toast.makeText(this, "Update Failed", Toast.LENGTH_SHORT).show();

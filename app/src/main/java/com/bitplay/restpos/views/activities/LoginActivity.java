@@ -85,11 +85,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void getAllDataValues() {
 
         if (mEmailET.getText().toString().length() == 0) {
-            Toast.makeText(this, "Name can't be blank", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Name can't be blank", Toast.LENGTH_SHORT).show();
             mEmailET.setError("Name can't be blank");
             return;
         } else if (mPasswordET.getText().toString().length() == 0) {
-            Toast.makeText(this, "Password can't be blank", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(this, "Password can't be blank", Toast.LENGTH_SHORT).show();
             mPasswordET.setError("Password can't be blank");
             return;
         }
@@ -134,10 +134,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     @Override
-    public void onLoginError(int pid, LoginModel loginErrorModel) {
+    public void onLoginError(int pid, String loginErrorModel) {
 
         Utils.stopProgress(LoginActivity.this);
-        Toast.makeText(this, "Login error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, ""+loginErrorModel.replaceAll("\"",""), Toast.LENGTH_SHORT).show();
 
     }
 

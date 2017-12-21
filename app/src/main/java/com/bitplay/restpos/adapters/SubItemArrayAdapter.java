@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.extra.BookedItems;
 import com.bitplay.restpos.extra.MealDetails;
+import com.bitplay.restpos.models.subcategoryitem.SubCategoryItemModel;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapter.ViewHolder> {
 
-    private List<MealDetails> data;
+    private List<SubCategoryItemModel> data;
     private Context mContext;
     private String mCatogery;
     private Spinner itemQuantitySpinner;
@@ -42,10 +43,10 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
     public static List<BookedItems> bookeditemsList = new ArrayList<BookedItems>();
 
 
-    public SubItemArrayAdapter(Context context, List<MealDetails> data, String catogery) {
+    public SubItemArrayAdapter(Context context, List<SubCategoryItemModel> data) {
         this.mContext = context;
         this.data = data;
-        this.mCatogery = catogery;
+      //  this.mCatogery = catogery;
     }
 
 
@@ -61,8 +62,8 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
     public void onBindViewHolder(final SubItemArrayAdapter.ViewHolder holder, final int position) {
 
 
-        holder.sub_item_Name.setText(data.get(position).getItemName().toString().replace("\"", ""));
-        if ((data.get(position).getItemName().toString().contains("Veg"))) {
+        holder.sub_item_Name.setText(data.get(position).getItemname().toString().replace("\"", ""));
+        if ((data.get(position).getMealtype().toString().contains("vege"))) {
             holder.mGreenDot.setVisibility(View.VISIBLE);
             holder.mRedDot.setVisibility(View.GONE);
         } else {
@@ -84,7 +85,7 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
                     TextView itemQuality = (TextView) additemsDialogBox.findViewById(R.id.item_table_details_quantity_tv);
                     Button addBucket = (Button) additemsDialogBox.findViewById(R.id.item_table_details_quantity_button);
                     itemQuantitySpinner = (Spinner) additemsDialogBox.findViewById(R.id.item_table_details_quantity_spinner);
-                    itemQuality.setText((data.get(position).getItemName().toString()).replace("\"", ""));
+                    itemQuality.setText((data.get(position).getItemname().toString()).replace("\"", ""));
 
                     addQuantity = new ArrayList<String>();
                     addQuantity.add("" + 1);
@@ -103,7 +104,7 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
                         public void onClick(View view) {
 
                             String quantity = itemQuantitySpinner.getSelectedItem().toString();
-                            String itemName = data.get(position).getItemName().toString();
+                            String itemName = data.get(position).getItemname().toString();
                             String price = data.get(position).getPrice().toString();
 
                             BookedItems bookedItems = new BookedItems();

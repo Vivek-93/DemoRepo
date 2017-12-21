@@ -17,6 +17,8 @@ public class AppConstants {
     public static int TAG_ID_GUEST_DETAILS=107;
     public static int TAG_ID_GET_GUEST_DETAILS=108;
     public static int TAG_ID_SUB_CATEGORY=109;
+    public static int TAG_ID_SUB_CATEGORY_ITEMS=110;
+    public static int TAG_ID_SEARCH_ITEMS=111;
 
 
     public static String baseUrlInsideApp = "http://192.168.1.106:8082/api";
@@ -63,7 +65,9 @@ public class AppConstants {
         MENUCATEGORY("/RestaurantMenu/Get"),
         GUESTDETAILS("/Restaurant/RestaurantAdd"),
         GETGUESTDETAIL("/Restaurant/GuestDetail"),
-        SUBCATEGORY("/RestaurantMenu/SubCategory");
+        SUBCATEGORY("/RestaurantMenu/SubCategory"),
+        SUBCATEGORYITEMS("/RestaurantMenu/ItemDetail"),
+        SEARCHITEMS("/RestaurantMenu/ItemList");
 
 
 

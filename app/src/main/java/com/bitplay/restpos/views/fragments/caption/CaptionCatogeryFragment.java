@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.adapters.ItemArrayAdapter;
-import com.bitplay.restpos.adapters.ItemArrayAdapter1;
 import com.bitplay.restpos.adapters.SubItemArrayAdapter;
 import com.bitplay.restpos.adapters.SubSubItemAdapter;
 import com.bitplay.restpos.extra.MealDetails;
@@ -26,7 +24,7 @@ import com.bitplay.restpos.interfaces.menucategory.IMenuCategoryView;
 import com.bitplay.restpos.interfaces.menucategory.MenuCategoryPresenterImpl;
 import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
 import com.bitplay.restpos.models.subcategory.SubcategoryModel;
-import com.bitplay.restpos.models.tabledetails.TableDetailModel;
+import com.bitplay.restpos.models.subcategoryitem.SubCategoryItemModel;
 import com.bitplay.restpos.utils.Utils;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 
@@ -42,7 +40,7 @@ import static com.bitplay.restpos.utils.Utils.context;
 public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryView {
 
     public RecyclerView mCatogeryRecyclerView, mSubSubCatogeryRv, mSubCatogeryRv;
-    private ArrayList<MealDetails> mList = new ArrayList<>();
+    private List<SubCategoryItemModel> mList = new ArrayList<>();
     private List<MenuCategoryModel> catogeryList = new ArrayList<>();
 
     private List<SubcategoryModel> subCatogeryList = new ArrayList<SubcategoryModel>();
@@ -94,7 +92,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
         mItemArrayAdapter = new ItemArrayAdapter(getContext(), pos, catogeryList, new ItemArrayAdapter.CatogeryonClick() {
             @Override
             public void onClicked(MenuCategoryModel catogery, int pos) {
-                mMenuCategoryPresenter.getSubCategoryItems(catogery.getCategory());
+                mMenuCategoryPresenter.getSubCategoryApi(catogery.getCategory());
                // settingUpCategoryRecyclerView(catogery, pos);
 
             }
@@ -130,20 +128,17 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     }
 
     @Override
-    public void onGetSubCategoryItemsSuccess(int pid, SubcategoryModel[] subcategoryModels) {
+    public void onGetSubCategorySuccess(int pid, SubcategoryModel[] subcategoryModels) {
 
         Utils.stopProgress(context);
         Log.d("CCF", "list size" + subcategoryModels.length);
         subCatogeryList = Arrays.asList(subcategoryModels);
         mSubSubItemAdapter = new SubSubItemAdapter(getContext(), pos, subCatogeryList, new SubSubItemAdapter.SubCatogeryonClick() {
             @Override
-            public void onClicked(String data, int pos) {
+            public void onClicked(SubcategoryModel data, int pos) {
 
-                Log.d("CaptionFragment", "" + data);
-                mSubSubCatogeryRv.setHasFixedSize(true);
-                mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList, data);
-                mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
-                mSubSubCatogeryRv.setAdapter(mSubItemArrayAdapter);
+                mMenuCategoryPresenter.getSubCategoryItemApi(data.getSubcategory());
+
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -153,7 +148,23 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     }
 
     @Override
-    public void onGetSubCategoryItemsError(int pid, String error) {
+    public void onGetSubCategoryError(int pid, String error) {
+
+    }
+
+    @Override
+    public void onGetSubCategoryItemSuccess(int pid, SubCategoryItemModel[] subCategoryItemModel) {
+        Utils.stopProgress(context);
+        mList =Arrays.asList(subCategoryItemModel);
+
+        mSubSubCatogeryRv.setHasFixedSize(true);
+        mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList);
+        mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mSubSubCatogeryRv.setAdapter(mSubItemArrayAdapter);
+    }
+
+    @Override
+    public void onGetSubCategoryItemError(int pid, String error) {
 
     }
 }

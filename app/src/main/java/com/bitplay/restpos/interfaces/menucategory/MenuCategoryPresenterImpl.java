@@ -6,8 +6,8 @@ import com.bitplay.restpos.async.AsyncInteractor;
 import com.bitplay.restpos.async.OnRequestListener;
 import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
 import com.bitplay.restpos.models.subcategory.SubcategoryModel;
+import com.bitplay.restpos.models.subcategoryitem.SubCategoryItemModel;
 import com.bitplay.restpos.utils.AppConstants;
-import com.bitplay.restpos.utils.NetworkStatus;
 import com.bitplay.restpos.utils.Utils;
 import com.bitplay.restpos.views.fragments.caption.CaptionCatogeryFragment;
 import com.google.gson.Gson;
@@ -31,6 +31,7 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequ
 
     private MenuCategoryModel[] mMenuCategoryModel;
     private SubcategoryModel[] mSubcategoryModel;
+    private SubCategoryItemModel[] mSubcategoryItemModel;
 
     public MenuCategoryPresenterImpl(IMenuCategoryView mIMenuCategoryView) {
         this.mIMenuCategoryView = mIMenuCategoryView;
@@ -50,7 +51,7 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequ
     }
 
     @Override
-    public void getSubCategoryItems(String category) {
+    public void getSubCategoryApi(String category) {
         try {
 
             Utils.showProgress(mCaptionCatogeryFragment.getActivity());
@@ -59,6 +60,24 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequ
             Log.d("params", "" + params.toString());
             mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_SUB_CATEGORY,
                     AppConstants.URL.SUBCATEGORY.getUrl(), params);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void getSubCategoryItemApi(String subcategory) {
+
+        try {
+
+            Utils.showProgress(mCaptionCatogeryFragment.getActivity());
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("subcategory", subcategory);
+            Log.d("params", "" + params.toString());
+            mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_SUB_CATEGORY_ITEMS,
+                    AppConstants.URL.SUBCATEGORYITEMS.getUrl(), params);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,7 +102,12 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequ
             } else if (pid == AppConstants.TAG_ID_SUB_CATEGORY) {
                 Gson gson = new Gson();
                 mSubcategoryModel = gson.fromJson(responseJson, SubcategoryModel[].class);
-                mIMenuCategoryView.onGetSubCategoryItemsSuccess(pid, mSubcategoryModel);
+                mIMenuCategoryView.onGetSubCategorySuccess(pid, mSubcategoryModel);
+
+            } else if (pid == AppConstants.TAG_ID_SUB_CATEGORY_ITEMS) {
+                Gson gson = new Gson();
+                mSubcategoryItemModel = gson.fromJson(responseJson, SubCategoryItemModel[].class);
+                mIMenuCategoryView.onGetSubCategoryItemSuccess(pid, mSubcategoryItemModel);
 
             }
         }

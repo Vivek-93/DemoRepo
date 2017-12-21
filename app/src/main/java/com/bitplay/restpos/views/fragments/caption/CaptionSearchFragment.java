@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,29 +37,45 @@ import com.bitplay.restpos.adapters.SubItemArrayAdapter;
 import com.bitplay.restpos.extra.BookedItems;
 import com.bitplay.restpos.extra.MealDetails;
 import com.bitplay.restpos.extra.SearchData;
+import com.bitplay.restpos.interfaces.menucategory.MenuCategoryPresenterImpl;
+import com.bitplay.restpos.interfaces.searchitem.ISearchItemView;
+import com.bitplay.restpos.interfaces.searchitem.SearchItemPresenterImpl;
+import com.bitplay.restpos.models.searchitem.SearchItemModel;
+import com.bitplay.restpos.utils.Utils;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.bitplay.restpos.utils.Utils.context;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CaptionSearchFragment extends Fragment implements View.OnClickListener {
+public class CaptionSearchFragment extends Fragment implements View.OnClickListener, ISearchItemView {
 
     private ArrayList<MealDetails> searchList = new ArrayList<>();
     public AutoCompleteTextView mSearchEt;
     public ImageView mSearchIv;
     public RecyclerView mCaptionSearchRv;
-    private List<String> searchDataList = new ArrayList<String>();
+    private List<SearchItemModel> searchDataList ;
     private CaptionSearchAdapter mCaptionSearchAdapter;
-    private List<SearchData> mSearchedItemsList = new ArrayList<SearchData>();
+    private List<SearchData> mSearchedItemsList;
     private String searchItemm;
     public String search;
     private Dialog additemsDialog;
     private Spinner itemSpinner;
     private ArrayList<String> addQuantity;
     private SearchData mSearchData;
+
+    private Context mContext;
+    private TableDetailsActivity mTableDetailsActivity;
+    private FragmentManager mFragmentManager;
+    private SearchItemPresenterImpl mSubItemPresenter;
+    private String items;
+    private ArrayList<String> list;
+    private ArrayAdapter adapter;
 
     public CaptionSearchFragment() {
         // Required empty public constructor
@@ -70,26 +88,40 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
         mSearchEt = (AutoCompleteTextView) view.findViewById(R.id.fragment_caption_search_et);
         mSearchIv = (ImageView) view.findViewById(R.id.fragment_caption_search_iv);
         mCaptionSearchRv = (RecyclerView) view.findViewById(R.id.fragment_caption_search_rv);
-      //  searchList = (ArrayList<MealDetails>) getArguments().getSerializable("itemList");
-      //  Log.d("captionSearchFragment", "List" + searchList.get(0).getItemName().toString());
+        //  searchList = (ArrayList<MealDetails>) getArguments().getSerializable("itemList");
+        //  Log.d("captionSearchFragment", "List" + searchList.get(0).getItemName().toString());
         initilizeView();
 
         return view;
     }
 
-    private void initilizeView() {
+    @Override
+    public void onResume() {
+        super.onResume();
 
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mContext = getContext();
+        mTableDetailsActivity = (TableDetailsActivity) getActivity();
+        mFragmentManager = mTableDetailsActivity.getSupportFragmentManager();
+        mSubItemPresenter = new SearchItemPresenterImpl(this);
+        mSubItemPresenter.searchItemsApi(1);
+
+        Log.d("CaptionSearhFragment","on view create list"+searchDataList.size());
+
+    }
+
+
+    private void initilizeView() {
+        searchDataList = new ArrayList<>();
+        mSearchedItemsList = new ArrayList<SearchData>();
+        list = new ArrayList<String>();
         mSearchIv.setOnClickListener(this);
 
-      /*  for (int i = 0; i < searchList.size(); i++) {
-            String itemName = searchList.get(i).getItemName().toString().replace("\"", "");
-            searchDataList.add(itemName);
-        }
-*/
-      /*  ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, searchDataList);
-        //  mSearchEt.setThreshold(6);
-        mSearchEt.setThreshold(1);
-        mSearchEt.setAdapter(adapter);*/
+        Log.d("CaptionSearhFragment","iniz list"+searchDataList.size());
 
     }
 
@@ -168,5 +200,37 @@ public class CaptionSearchFragment extends Fragment implements View.OnClickListe
         mCaptionSearchRv.setAdapter(mCaptionSearchAdapter);
         mSearchEt.setText("");
 */
+    }
+
+    @Override
+    public void onSearchItemsApiSuccess(int pid, SearchItemModel[] searchItemModels) {
+        Utils.stopProgress(context);
+        searchDataList = Arrays.asList(searchItemModels);
+        Log.d("CaptionSearhFragment","direct list"+searchDataList.size());
+
+        for (int i = 0; i < searchDataList.size(); i++) {
+            list.add(searchDataList.get(i).getImageName().toString());
+        }
+
+        Log.d("CaptionSearhFragment","list"+list.size());
+
+
+
+
+
+      /*  Log.d("CaptionSearhFragment",""+list.size());
+        adapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, list);
+        adapter.notifyDataSetChanged();
+        mSearchEt.setThreshold(1);
+        mSearchEt.setAdapter(adapter);*/
+
+
+
+
+    }
+
+    @Override
+    public void onSearchItemsApiError(int pid, String error) {
+
     }
 }

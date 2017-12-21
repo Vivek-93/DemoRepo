@@ -184,6 +184,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onGuestDetailsError(int pid, String guestDetailerror) {
 
+        Utils.stopProgress(MainActivity.this);
+        Toast.makeText(this, ""+guestDetailerror.replace("\"", ""), Toast.LENGTH_SHORT).show();
+
     }
 }
 

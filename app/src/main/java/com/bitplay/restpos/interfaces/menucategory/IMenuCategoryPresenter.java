@@ -7,5 +7,7 @@ package com.bitplay.restpos.interfaces.menucategory;
 public interface IMenuCategoryPresenter {
 
     void getMenuCategoryApi();
-    void getSubCategoryItems(String category);
+    void getSubCategoryApi(String category);
+    void getSubCategoryItemApi(String subcategory);
+
 }

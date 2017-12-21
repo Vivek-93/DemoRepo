@@ -29,6 +29,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRequestListener {
     private LoginActivity mLoginActivity;
     private AsyncInteractor mAsyncInteractor;
     private LoginModel mLoginModel;
+    private String mLoginErrorModel;
 
     public LoginPresenterImpl(ILoginView mILoginView) {
         this.mILoginView = mILoginView;
@@ -64,11 +65,8 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRequestListener {
         if (pid == AppConstants.TAG_ID_LOGIN) {
 
             if (responseJson != null) {
-
                 Gson gson = new Gson();
-
                 mLoginModel = gson.fromJson(responseJson, LoginModel.class);
-
                 mILoginView.onLoginSuccess(pid, mLoginModel);
             } else {
                 //  mILoginView.onLoginError(pid, mLoginModel.getMeta().getStatus());
@@ -81,8 +79,8 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRequestListener {
     public void onRequestCompletionError(int pid, String error) {
         if (pid == AppConstants.TAG_ID_LOGIN) {
             Gson gson = new Gson();
-         //   mLoginErrorModel = gson.fromJson(error, LoginErrorModel.class);
-            mILoginView.onLoginError(pid, mLoginModel);
+            mLoginErrorModel = gson.toJson(error);
+            mILoginView.onLoginError(pid, mLoginErrorModel);
         }
     }
 

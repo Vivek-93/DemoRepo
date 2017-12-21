@@ -32,6 +32,7 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
     private MainActivity mMainActivity;
     private AsyncInteractor mAsyncInteractor;
     private TableDetailModel[] mTableDetailModel;
+    private String mGuesrDetailError;
     private String mGuestDetailModel;
 
     public TableDetailPresenterImpl(ITableDetailView mITableDetailView) {
@@ -130,6 +131,10 @@ public class TableDetailPresenterImpl implements ITableDetailPresenter, OnReques
             Gson gson = new Gson();
             mTableDetailModel = gson.fromJson(error, TableDetailModel[].class);
             mITableDetailView.onTableDetailsError(pid, mTableDetailModel);
+        }else if (pid == AppConstants.TAG_ID_GUEST_DETAILS) {
+            Gson gson = new Gson();
+            mGuesrDetailError = gson.toJson(error);
+            mITableDetailView.onGuestDetailsError(pid, mGuesrDetailError);
         }
 
     }

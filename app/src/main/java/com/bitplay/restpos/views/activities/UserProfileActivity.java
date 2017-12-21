@@ -80,9 +80,9 @@ public class UserProfileActivity extends AppCompatActivity implements IProfileDe
     }
 
     @Override
-    public void onProfileDetailError(int pid, ProfileModel profileErrorModel) {
+    public void onProfileDetailError(int pid, String profileErrorModel) {
         Utils.stopProgress(UserProfileActivity.this);
-        Toast.makeText(this, "User Profile error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, ""+profileErrorModel, Toast.LENGTH_SHORT).show();
 
     }
 

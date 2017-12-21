@@ -37,7 +37,7 @@ public class SubSubItemAdapter extends RecyclerView.Adapter<SubSubItemAdapter.Vi
     private int row_index=-1;
 
     public interface SubCatogeryonClick {
-        void onClicked(String data, int pos);
+        void onClicked(SubcategoryModel data, int pos);
 
     }
 
@@ -65,7 +65,7 @@ public class SubSubItemAdapter extends RecyclerView.Adapter<SubSubItemAdapter.Vi
             @Override
             public void onClick(View view) {
 
-                mClick.onClicked(subData.get(position).getSubcategory(), position);
+                mClick.onClicked(subData.get(position), position);
                 row_index=position;
                 notifyDataSetChanged();
 

@@ -132,18 +132,11 @@ public class CaptionRecyclerViewAdaptor extends RecyclerView.Adapter<CaptionRecy
                         @Override
                         public void onClick(View view) {
 
-                          /*  if(guestName.getText()==null){
-                                Toast.makeText(mContext, "Enter guest name", Toast.LENGTH_SHORT).show();
-                            }else if(guestPhone.getText()==null){
-                                Toast.makeText(mContext, "Enter guest phone number", Toast.LENGTH_SHORT).show();
-                            }
-                          else   if(!guestName.getText().equals(null) && !guestPhone.getText().equals(null)) {*/
-
                                 mClick.onClicked(data.get(position).getId().toString(), data.get(position).getTablenumber().toString(), counts.getText().toString(), guestName.getText().toString(),
                                         guestPhone.getText().toString());
                                 notifyDataSetChanged();
 
-                            tableInfoDialogBox.dismiss();
+                           // tableInfoDialogBox.dismiss();
                         }
                     });
 

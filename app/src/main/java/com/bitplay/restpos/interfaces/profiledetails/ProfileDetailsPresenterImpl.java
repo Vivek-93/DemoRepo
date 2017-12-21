@@ -29,6 +29,7 @@ public class ProfileDetailsPresenterImpl implements IProfileDetailsPresenter , O
     private UserProfileActivity mUserProfileActivity;
     private AsyncInteractor mAsyncInteractor;
     private ProfileModel mProfileModel;
+    private String mLoginErrorModel;
 
     public ProfileDetailsPresenterImpl(IProfileDetailsView mIProfileDetailsView) {
         this.mIProfileDetailsView = mIProfileDetailsView;
@@ -85,8 +86,8 @@ public class ProfileDetailsPresenterImpl implements IProfileDetailsPresenter , O
 
         if (pid == AppConstants.TAG_ID_PROFILE_DETAILS) {
             Gson gson = new Gson();
-            //   mLoginErrorModel = gson.fromJson(error, LoginErrorModel.class);
-            mIProfileDetailsView.onProfileDetailError(pid, mProfileModel);
+            mLoginErrorModel = gson.toJson(error);
+            mIProfileDetailsView.onProfileDetailError(pid, mLoginErrorModel);
         }
 
     }

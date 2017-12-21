@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.bitplay.restpos.async.AsyncInteractor;
 import com.bitplay.restpos.async.OnRequestListener;
-import com.bitplay.restpos.models.profileupdate.ProfileUpdateModel;
-import com.bitplay.restpos.models.register.RegisterModel;
 import com.bitplay.restpos.utils.AppConstants;
 import com.bitplay.restpos.utils.NetworkStatus;
 import com.bitplay.restpos.utils.Utils;
@@ -28,7 +26,9 @@ public class ProfileUpdatePresenterImpl implements IProfileUpdatePresenter, OnRe
     private IProfileUpdateView mIProfileUpdateView;
     private UserProfileUpdateActivity mUserProfileUpdateActivity;
     private AsyncInteractor mAsyncInteractor;
-    private ProfileUpdateModel mProfileUpdateModel;
+    private String mProfileUpdateModel;
+    private String mLoginErrorModel;
+
 
     public ProfileUpdatePresenterImpl( IProfileUpdateView mIProfileUpdateView) {
         this.mIProfileUpdateView = mIProfileUpdateView;
@@ -75,9 +75,7 @@ public class ProfileUpdatePresenterImpl implements IProfileUpdatePresenter, OnRe
             if (responseJson != null) {
 
                 Gson gson = new Gson();
-
-                mProfileUpdateModel= gson.fromJson(responseJson, ProfileUpdateModel.class);
-
+                mProfileUpdateModel= gson.toJson(responseJson);
                 mIProfileUpdateView.onProfileUpdateSuccess(pid, mProfileUpdateModel);
             } else {
                 //  mIRegisterView.onLoginError(pid, mRegisterModel.getMeta().getStatus());
@@ -89,10 +87,10 @@ public class ProfileUpdatePresenterImpl implements IProfileUpdatePresenter, OnRe
     @Override
     public void onRequestCompletionError(int pid, String error) {
 
-        if (pid == AppConstants.TAG_ID_REGISTER) {
+        if (pid == AppConstants.TAG_ID_PROFILE_UPDATE) {
             Gson gson = new Gson();
-            //   mLoginErrorModel = gson.fromJson(error, LoginErrorModel.class);
-            mIProfileUpdateView.onProfileUpdateError(pid, mProfileUpdateModel);
+            mLoginErrorModel = gson.toJson(error);
+            mIProfileUpdateView.onProfileUpdateError(pid, mLoginErrorModel);
         }
 
     }

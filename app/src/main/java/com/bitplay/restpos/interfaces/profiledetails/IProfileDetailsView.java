@@ -10,5 +10,5 @@ public interface IProfileDetailsView {
 
     void onProfileDetailSuccess(int pid, ProfileModel profileModel);
 
-    void onProfileDetailError(int pid, ProfileModel profileErrorModel);
+    void onProfileDetailError(int pid, String profileErrorModel);
 }
