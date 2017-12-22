@@ -44,6 +44,7 @@ public class Sharedpreferences {
     public static final String TAG_USER_NAME = "username";
     public static final String TAG_USER_ROLE= "userrole";
     public static final String TAG_TABLE_ID= "tableid";
+    public static final String TAG_TABLE_NUMBER= "tablenumber";
 
     public static final String TAG_USER_COMING_FROM = "comingfrom";
 
@@ -136,6 +137,18 @@ public class Sharedpreferences {
     public void setUsername(String username) {
         try {
             editor.putString(TAG_USER_NAME, username);
+            editor.commit();
+        } catch (Exception e) {
+        }
+    }
+
+    public String getTableNumber() {
+        return pref.getString(TAG_TABLE_NUMBER, "");
+    }
+
+    public void setTableNumber(String tablenumber) {
+        try {
+            editor.putString(TAG_TABLE_NUMBER, tablenumber);
             editor.commit();
         } catch (Exception e) {
         }

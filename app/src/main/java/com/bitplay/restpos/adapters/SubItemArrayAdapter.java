@@ -40,13 +40,20 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
     private Spinner itemQuantitySpinner;
     private Dialog additemsDialogBox;
     private List<String> addQuantity;
-    public static List<BookedItems> bookeditemsList = new ArrayList<BookedItems>();
+ //   public static List<BookedItems> bookeditemsList = new ArrayList<BookedItems>();
+
+    private final AddCartButtonClick mClick;
+
+    public interface AddCartButtonClick {
+
+        void onClicked(String itemname,int quantity,float price);
+    }
 
 
-    public SubItemArrayAdapter(Context context, List<SubCategoryItemModel> data) {
+    public SubItemArrayAdapter(Context context, List<SubCategoryItemModel> data,AddCartButtonClick mClick) {
         this.mContext = context;
         this.data = data;
-      //  this.mCatogery = catogery;
+        this.mClick = mClick;
     }
 
 
@@ -103,16 +110,19 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
                         @Override
                         public void onClick(View view) {
 
-                            String quantity = itemQuantitySpinner.getSelectedItem().toString();
+                            int quantity = Integer.parseInt(itemQuantitySpinner.getSelectedItem().toString());
                             String itemName = data.get(position).getItemname().toString();
                             String price = data.get(position).getPrice().toString();
 
-                            BookedItems bookedItems = new BookedItems();
+                            mClick.onClicked(itemName,quantity, Float.parseFloat(price));
+
+
+                          /*  BookedItems bookedItems = new BookedItems();
                             bookedItems.setItemName(itemName);
                             bookedItems.setQuantity(quantity);
                             bookedItems.setPrice(price);
                             bookeditemsList.add(bookedItems);
-                            Log.d("list", "" + bookeditemsList.size());
+                            Log.d("list", "" + bookeditemsList.size());*/
                            /* Intent intent = new Intent(mContext, TableDetailsActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             mContext.startActivity(intent);
@@ -131,9 +141,9 @@ public class SubItemArrayAdapter extends RecyclerView.Adapter<SubItemArrayAdapte
 
     }
 
-    public ArrayList<BookedItems> getArrayList() {
+  /*  public ArrayList<BookedItems> getArrayList() {
         return (ArrayList<BookedItems>) bookeditemsList;
-    }
+    }*/
 
     @Override
     public int getItemCount() {

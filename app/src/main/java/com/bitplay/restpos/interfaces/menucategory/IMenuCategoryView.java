@@ -20,4 +20,7 @@ public interface IMenuCategoryView {
    void onGetSubCategoryItemSuccess(int pid, SubCategoryItemModel[] subCategoryItemModel);
    void onGetSubCategoryItemError(int pid , String error);
 
+   void onOrderBookedSuccess(int pid , String orderBookedSuccess);
+   void onOrderBookedError(int pid , String orderBookedError);
+
 }

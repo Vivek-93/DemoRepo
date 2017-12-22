@@ -32,6 +32,7 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequ
     private MenuCategoryModel[] mMenuCategoryModel;
     private SubcategoryModel[] mSubcategoryModel;
     private SubCategoryItemModel[] mSubcategoryItemModel;
+    private String mBookedOrder;
 
     public MenuCategoryPresenterImpl(IMenuCategoryView mIMenuCategoryView) {
         this.mIMenuCategoryView = mIMenuCategoryView;
@@ -86,6 +87,26 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequ
     }
 
     @Override
+    public void bookedOrderApi(int tablenumber, String bookitems, int quantity ,float price) {
+
+        try {
+            Utils.showProgress(mCaptionCatogeryFragment.getActivity());
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("tablenumber", String.valueOf(tablenumber));
+            params.put("bookitems", bookitems);
+            params.put("quantity", String.valueOf(quantity));
+            params.put("price", String.valueOf(price));
+            Log.d("params", "" + params.toString());
+            mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_BOOKED_ORDER,
+                    AppConstants.URL.BOOKEDORDER.getUrl(), params);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
     public void onRequestCompletion(int pid, JSONObject responseJson, JSONArray responseArray) {
 
     }
@@ -108,6 +129,11 @@ public class MenuCategoryPresenterImpl implements IMenuCategoryPresenter, OnRequ
                 Gson gson = new Gson();
                 mSubcategoryItemModel = gson.fromJson(responseJson, SubCategoryItemModel[].class);
                 mIMenuCategoryView.onGetSubCategoryItemSuccess(pid, mSubcategoryItemModel);
+
+            } else if (pid == AppConstants.TAG_ID_BOOKED_ORDER) {
+                Gson gson = new Gson();
+                mBookedOrder= gson.toJson(responseJson);
+                mIMenuCategoryView.onOrderBookedSuccess(pid, mBookedOrder);
 
             }
         }

@@ -9,5 +9,6 @@ public interface IMenuCategoryPresenter {
     void getMenuCategoryApi();
     void getSubCategoryApi(String category);
     void getSubCategoryItemApi(String subcategory);
+    void bookedOrderApi(int tablenumber,String bookitems,int quantity,float price);
 
 }

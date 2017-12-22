@@ -52,13 +52,10 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
     public ImageView mBookedItems, mBackIv;
 
     private Context context;
-    private ArrayList<MealDetails> filterList;
     public TextView mGuestName, mGuestPhone, mGuestTable, mKotNumber;
 
     private Button mCetogery, mSearch;
 
-    ArrayList<BookedItems> list = new ArrayList<BookedItems>();
-    private String guestName, guestPhone, guestTable;
     private IGetGuestDetailPresenter mIGetGuestDetailPresenter;
     public Sharedpreferences mPref = Sharedpreferences.getUserDataObj(TableDetailsActivity.this);
 
@@ -87,9 +84,8 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
 
     private void initializeViews() {
 
-        //readFileDataMethod();
-
         mFragmentManager = getSupportFragmentManager();
+
         openCatogeryFragment();
 
         mBookedItems.setOnClickListener(this);
@@ -97,41 +93,7 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
         mCetogery.setOnClickListener(this);
         mBackIv.setOnClickListener(this);
 
-
-
-
     }
-
-
-    ArrayList<MealDetails> mealdetails = new ArrayList<>();
-
-  /*  private void readFileDataMethod() {
-        InputStream inputStream = getResources().openRawResource(R.raw.restaurant_menu_v);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
-
-        String line = "";
-
-        try {
-            while ((line = reader.readLine()) != null) {
-
-                String[] tockons = line.split(",");
-                MealDetails sample = new MealDetails();
-                sample.setItemName(tockons[0]);
-                sample.setShortCode(tockons[1]);
-                sample.setOnlineDisplayName(tockons[2]);
-                sample.setCategory(tockons[3]);
-                sample.setPrice(tockons[4]);
-                sample.setMinimumPreparationTime(tockons[5]);
-                sample.sethSNCode(tockons[6]);
-                sample.setDescription(tockons[7]);
-                sample.setAvailable(tockons[8]);
-                mealdetails.add(sample);
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
 
     @Override
@@ -171,10 +133,10 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
 
     private void openCatogeryFragment() {
 
-       // Bundle bundle = new Bundle();
-       // bundle.putSerializable("itemlistCatogery", mealdetails);
+      /*  Bundle bundle = new Bundle();
+        bundle.putString("tableno", mGuestTable.getText().toString());*/
         CaptionCatogeryFragment ccf = new CaptionCatogeryFragment();
-      //  ccf.setArguments(bundle);
+     //   ccf.setArguments(bundle);
         mFragmentManager.beginTransaction().replace(R.id.act_table_details_framelayout, ccf).addToBackStack(null).commit();
     }
 
@@ -192,12 +154,14 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
     public void onGetGuestDetailSuccess(int pid, GetGuestDetailModel getGuestDetailModel) {
 
         Utils.stopProgress(TableDetailsActivity.this);
+
+
         if (getGuestDetailModel!=null) {
 
             mGuestName.setText("" + getGuestDetailModel.getGuestname());
             mGuestPhone.setText("" + getGuestDetailModel.getPhonenumber());
             mGuestTable.setText("Table" + getGuestDetailModel.getTablenumber());
-
+          //  mPref.setTableNumber(mGuestTable.getText().toString());
         }
     }
 
@@ -215,6 +179,7 @@ public class TableDetailsActivity extends AppCompatActivity implements View.OnCl
 
         mIGetGuestDetailPresenter = new GetGuestDetailPresenterImpl(TableDetailsActivity.this);
         mIGetGuestDetailPresenter.getGuestDetailApiCall(Integer.parseInt(mPref.getTableId()));
+
         Log.d("TableDetailActivity","comming"+mPref.getTableId());
     }
 }

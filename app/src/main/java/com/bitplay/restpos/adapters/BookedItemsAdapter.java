@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.bitplay.restpos.extra.BookedItems;
 import com.bitplay.restpos.R;
 import com.bitplay.restpos.extra.UpdateItems;
+import com.bitplay.restpos.models.bookeddetail.BookedDetailModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,12 @@ public class BookedItemsAdapter extends RecyclerView.Adapter<BookedItemsAdapter.
 
     private Context mContext;
 
-    public List<BookedItems> itemslist;
+    public List<BookedDetailModel> itemslist;
 
     public List<UpdateItems> updateItemsList;
 
 
-    public BookedItemsAdapter(Context context, List<BookedItems> itemslist) {
+    public BookedItemsAdapter(Context context, List<BookedDetailModel> itemslist) {
         this.mContext = context;
         this.itemslist = itemslist;
         // this.name=name;
@@ -46,7 +47,6 @@ public class BookedItemsAdapter extends RecyclerView.Adapter<BookedItemsAdapter.
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.booked_recyclerview_item, parent, false);
         final ViewHolder viewHolder = new ViewHolder(view);
-
         return viewHolder;
     }
 
@@ -54,7 +54,7 @@ public class BookedItemsAdapter extends RecyclerView.Adapter<BookedItemsAdapter.
     public void onBindViewHolder(final BookedItemsAdapter.ViewHolder holder, final int position) {
 
 
-        holder.item_Name.setText((itemslist.get(position).getItemName()).replace("\"", ""));
+        holder.item_Name.setText((itemslist.get(position).getBookitems()));
         holder.quality.setText(itemslist.get(position).getQuantity());
         holder.count.setText(String.valueOf(position + 1) + ".");
 
@@ -70,30 +70,7 @@ public class BookedItemsAdapter extends RecyclerView.Adapter<BookedItemsAdapter.
 
             }
         });
-        holder.editDoneIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                holder.quality.setFocusable(false);
-                holder.quality.setEnabled(false);
-                holder.quality.setCursorVisible(false);
-
-                holder.editDoneIv.setVisibility(View.GONE);
-                holder.editMoreIV.setVisibility(View.VISIBLE);
-
-                String name=itemslist.get(position).getItemName().replace("\"", "");
-                String price=itemslist.get(position).getPrice().replace("\"", "");
-
-
-                UpdateItems upItems=new UpdateItems();
-                upItems.setUpdateItemName(name);
-                upItems.setUpdatePrice(Integer.parseInt(price));
-                upItems.setUpdateQuantity(holder.quality.getText());
-                updateItemsList.add(upItems);
-                Log.d("BookItemAdapter","comming"+holder.quality.getText().toString());
-
-            }
-        });
 
     }
 

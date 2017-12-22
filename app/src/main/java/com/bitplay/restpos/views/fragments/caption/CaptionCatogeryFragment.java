@@ -25,6 +25,7 @@ import com.bitplay.restpos.interfaces.menucategory.MenuCategoryPresenterImpl;
 import com.bitplay.restpos.models.menucategory.MenuCategoryModel;
 import com.bitplay.restpos.models.subcategory.SubcategoryModel;
 import com.bitplay.restpos.models.subcategoryitem.SubCategoryItemModel;
+import com.bitplay.restpos.utils.Sharedpreferences;
 import com.bitplay.restpos.utils.Utils;
 import com.bitplay.restpos.views.activities.TableDetailsActivity;
 
@@ -55,7 +56,8 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     private TableDetailsActivity mTableDetailsActivity;
     private FragmentManager mFragmentManager;
     private MenuCategoryPresenterImpl mMenuCategoryPresenter;
-
+    private String tableno;
+    public Sharedpreferences mPref;
     public CaptionCatogeryFragment() {
         // Required empty public constructor
     }
@@ -66,7 +68,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
         mCatogeryRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_caption_catogery_rv);
         mSubSubCatogeryRv = (RecyclerView) view.findViewById(R.id.fragment_caption_sub_sub_catogery_rv);
         mSubCatogeryRv = (RecyclerView) view.findViewById(R.id.fragment_caption_sub_catogery_rv);
-
+   //     tableno = getArguments().getString("tableno");
         initializeView();
         return view;
     }
@@ -82,7 +84,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     }
 
     private void initializeView() {
-
+        mPref = Sharedpreferences.getUserDataObj(getActivity());
         mCatogeryRecyclerView.setHasFixedSize(true);
         settingUpRecyclerView();
 
@@ -93,7 +95,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
             @Override
             public void onClicked(MenuCategoryModel catogery, int pos) {
                 mMenuCategoryPresenter.getSubCategoryApi(catogery.getCategory());
-               // settingUpCategoryRecyclerView(catogery, pos);
+                // settingUpCategoryRecyclerView(catogery, pos);
 
             }
         });
@@ -155,16 +157,34 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
     @Override
     public void onGetSubCategoryItemSuccess(int pid, SubCategoryItemModel[] subCategoryItemModel) {
         Utils.stopProgress(context);
-        mList =Arrays.asList(subCategoryItemModel);
-
+        mList = Arrays.asList(subCategoryItemModel);
         mSubSubCatogeryRv.setHasFixedSize(true);
-        mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList);
+        mSubItemArrayAdapter = new SubItemArrayAdapter(getContext(), mList, new SubItemArrayAdapter.AddCartButtonClick() {
+
+            @Override
+            public void onClicked(String itemname, int quantity, float price) {
+                mMenuCategoryPresenter.bookedOrderApi(1, itemname, quantity,price);
+            }
+        });
         mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mSubSubCatogeryRv.setAdapter(mSubItemArrayAdapter);
     }
 
     @Override
     public void onGetSubCategoryItemError(int pid, String error) {
+
+    }
+
+    @Override
+    public void onOrderBookedSuccess(int pid, String orderBookedSuccess) {
+        Utils.stopProgress(context);
+        Toast.makeText(mContext, ""+orderBookedSuccess, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onOrderBookedError(int pid, String orderBookedError) {
+        Utils.stopProgress(context);
+        Toast.makeText(mContext, ""+orderBookedError, Toast.LENGTH_SHORT).show();
 
     }
 }

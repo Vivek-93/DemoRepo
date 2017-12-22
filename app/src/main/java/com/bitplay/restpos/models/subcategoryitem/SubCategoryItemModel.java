@@ -22,7 +22,7 @@ public class SubCategoryItemModel {
     private Object subcategory;
     @SerializedName("price")
     @Expose
-    private Object price;
+    private Float price;
     @SerializedName("minimumpreparationtime")
     @Expose
     private Object minimumpreparationtime;
@@ -92,7 +92,7 @@ public class SubCategoryItemModel {
         return price;
     }
 
-    public void setPrice(Object price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

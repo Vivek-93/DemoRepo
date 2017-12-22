@@ -19,6 +19,8 @@ public class AppConstants {
     public static int TAG_ID_SUB_CATEGORY=109;
     public static int TAG_ID_SUB_CATEGORY_ITEMS=110;
     public static int TAG_ID_SEARCH_ITEMS=111;
+    public static int TAG_ID_BOOKED_ORDER=112;
+    public static int TAG_ID_GET_BOOKED_ORDER_DETAIL=113;
 
 
     public static String baseUrlInsideApp = "http://192.168.1.106:8082/api";
@@ -67,7 +69,9 @@ public class AppConstants {
         GETGUESTDETAIL("/Restaurant/GuestDetail"),
         SUBCATEGORY("/RestaurantMenu/SubCategory"),
         SUBCATEGORYITEMS("/RestaurantMenu/ItemDetail"),
-        SEARCHITEMS("/RestaurantMenu/ItemList");
+        SEARCHITEMS("/RestaurantMenu/ItemList"),
+        BOOKEDORDER("/Restaurant/BookedOrder"),
+        GETBOOKEDORDERDETAIL("/Restaurant/BookOrderDetail");
 
 
 
