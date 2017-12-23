@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".1"
             android:padding="5dp"
+            android:visibility="gone"
             android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_edit" />
         <ImageView

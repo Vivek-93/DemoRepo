@@ -46,7 +46,7 @@ public class BookedDetailPresenteImpl implements IBookedDetailPresenter,OnReques
         if (NetworkStatus.checkNetworkStatus(mBookedItemsActivity)) {
             //   Utils.showProgress(mTableDetailsActivity);
             Map<String, String> params = new HashMap<String, String>();
-            params.put("id", String.valueOf(tablenumber));
+            params.put("tablenumber", String.valueOf(tablenumber));
             Log.d("params", "" + params.toString());
             mAsyncInteractor.validateCredentialsAsync(this, AppConstants.TAG_ID_GET_BOOKED_ORDER_DETAIL,
                     AppConstants.URL.GETBOOKEDORDERDETAIL.getUrl(), params);

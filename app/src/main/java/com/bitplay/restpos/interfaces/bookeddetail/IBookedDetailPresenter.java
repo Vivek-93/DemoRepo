@@ -7,5 +7,5 @@ package com.bitplay.restpos.interfaces.bookeddetail;
 public interface IBookedDetailPresenter {
 
 
-    void bookedDetailsApi(int tablenumber);
+    void bookedDetailsApi(int tablenumber);  
 }

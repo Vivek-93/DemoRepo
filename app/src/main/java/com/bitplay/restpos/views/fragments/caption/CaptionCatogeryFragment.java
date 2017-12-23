@@ -163,7 +163,7 @@ public class CaptionCatogeryFragment extends Fragment implements IMenuCategoryVi
 
             @Override
             public void onClicked(String itemname, int quantity, float price) {
-                mMenuCategoryPresenter.bookedOrderApi(1, itemname, quantity,price);
+                mMenuCategoryPresenter.bookedOrderApi(2, itemname, quantity,price);
             }
         });
         mSubSubCatogeryRv.setLayoutManager(new GridLayoutManager(getContext(), 3));

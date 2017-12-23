@@ -36,10 +36,9 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
     public ImageButton mRefresh;
 
     private IBookedDetailPresenter mIBookedDetailPresenter;
-    private int total;
-    private int tota;
 
     private List<BookedDetailModel> mBookedItemList = new ArrayList<>();
+    private int sum =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +56,8 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
 
     private void initilizeView() {
 
-        mIBookedDetailPresenter.bookedDetailsApi(1);
+        mIBookedDetailPresenter.bookedDetailsApi(2);
         mRefresh.setOnClickListener(this);
-
 
     }
 
@@ -79,13 +77,16 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
         Utils.stopProgress(BookedItemsActivity.this);
         Log.d("BookedItemsActivity", "hi");
         mBookedItemList = Arrays.asList(bookedDetailModel);
-
-        Log.d("BookedItemsActivity", ""+mBookedItemList.size());
         mBookedRv.setHasFixedSize(true);
         mBookedItemsAdapter = new BookedItemsAdapter(this, mBookedItemList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mBookedRv.setLayoutManager(mLayoutManager);
         mBookedRv.setAdapter(mBookedItemsAdapter);
+
+
+
+        mTotalBillPrice.setText(sum);
+
     }
 
     @Override
