@@ -34,9 +34,9 @@ public class BookedItemsAdapter extends RecyclerView.Adapter<BookedItemsAdapter.
         // this.name=name;
       //  updateItemsList = new ArrayList<UpdateItems>();
 
+
+
     }
-
-
 
     @Override
     public BookedItemsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

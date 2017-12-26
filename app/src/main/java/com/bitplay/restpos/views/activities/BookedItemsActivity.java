@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,11 +35,12 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
     private BookedItemsAdapter mBookedItemsAdapter;
     public TextView mTotalBillPrice;
     public ImageButton mRefresh;
+    public ImageView mBack;
 
     private IBookedDetailPresenter mIBookedDetailPresenter;
 
     private List<BookedDetailModel> mBookedItemList = new ArrayList<>();
-    private int sum =0;
+    private int sum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
         mLl = (LinearLayout) findViewById(R.id.act_booked_item_ll);
         mTotalBillPrice = (TextView) findViewById(R.id.act_booked_items_totalprice_tv);
         mRefresh = (ImageButton) findViewById(R.id.act_booked_items_refresh_ib);
+        mBack = (ImageView) findViewById(R.id.act_booked_back_iv);
 
         mIBookedDetailPresenter = new BookedDetailPresenteImpl(BookedItemsActivity.this);
         initilizeView();
@@ -58,17 +61,22 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
 
         mIBookedDetailPresenter.bookedDetailsApi(2);
         mRefresh.setOnClickListener(this);
-
+        mBack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.act_booked_items_refresh_ib:
+                break;
 
 
-                return;
+            case R.id.act_booked_back_iv:
+
+                onBackPressed();
+                break;
+
+
         }
     }
 
@@ -82,9 +90,6 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mBookedRv.setLayoutManager(mLayoutManager);
         mBookedRv.setAdapter(mBookedItemsAdapter);
-
-
-
         mTotalBillPrice.setText(sum);
 
     }
@@ -93,7 +98,7 @@ public class BookedItemsActivity extends AppCompatActivity implements View.OnCli
     public void onBookedDetailsApiError(int pid, String bookedDetailModelError) {
         Utils.stopProgress(BookedItemsActivity.this);
 
-        Toast.makeText(this, ""+bookedDetailModelError, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + bookedDetailModelError, Toast.LENGTH_SHORT).show();
 
     }
 }
